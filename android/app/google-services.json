@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "762727647354",
+    "project_id": "facilacesso-ec21b",
+    "storage_bucket": "facilacesso-ec21b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:762727647354:android:7ab0374d7011bef5be93c3",
+        "android_client_info": {
+          "package_name": "com.facilacesso"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "762727647354-ovsh8bin3727a54p2m49t8fclv3lcjin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKKgeLeE7Q6-31nZA_JpASdTfugab1tk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "762727647354-ovsh8bin3727a54p2m49t8fclv3lcjin.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

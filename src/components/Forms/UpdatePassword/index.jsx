@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Form as Unform } from '@unform/mobile';
+import auth from '@react-native-firebase/auth';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
@@ -13,6 +14,8 @@ import { Container } from './styles';
 
 export function Form() {
   const formRef = useRef(null)
+
+  const [user, setUser] = useState(null);
 
   async function handleUpdatePassword(data) {
     try {
@@ -34,6 +37,17 @@ export function Form() {
       }
     }
   }
+
+  useEffect(() => {
+    // PARA DESLOGAR
+    // auth().signOut();
+
+    const subscriber = auth().onAuthStateChanged(setUser);
+
+    if (user) console.log(user);
+
+    return subscriber;
+  }, []);
 
   return (
     <Container>

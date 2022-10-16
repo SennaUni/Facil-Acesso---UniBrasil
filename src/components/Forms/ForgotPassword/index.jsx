@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Form as Unform } from '@unform/mobile';
+import auth from '@react-native-firebase/auth';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
@@ -14,25 +15,32 @@ import { Container } from './styles';
 export function Form() {
   const formRef = useRef(null)
 
-  async function handleForgotPassword(data) {
-    try {
-      formRef.current.setErrors({});
+  async function handleForgotPassword(data) { console.log(data)
+    const { email } = data;
 
-      await schema.validate(data, { abortEarly: false });
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => Alert.alert("Redefinição de senha", "Foi enviado um e-mail para você"))
+      .catch((error) => console.log(error));
 
-      console.log(data)
-    } catch (err) {
-      const validationErrors = {};
+    // try {
+    //   formRef.current.setErrors({});
+
+    //   await schema.validate(data, { abortEarly: false });
+
+    //   console.log(data)
+    // } catch (err) {
+    //   const validationErrors = {};
       
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach(error => {
-          validationErrors[error.path] = error.message;
-        });
+    //   if (err instanceof Yup.ValidationError) {
+    //     err.inner.forEach(error => {
+    //       validationErrors[error.path] = error.message;
+    //     });
 
-        formRef.current.setErrors(validationErrors);
-        console.log(validationErrors);
-      }
-    }
+    //     formRef.current.setErrors(validationErrors);
+    //     console.log(validationErrors);
+    //   }
+    // }
   }
 
   return (

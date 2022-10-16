@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Form as Unform } from '@unform/mobile';
+import auth from '@react-native-firebase/auth'
 
 import * as Yup from 'yup';
 import { schema } from './schema';
@@ -14,25 +15,38 @@ import { Container } from './styles';
 export function Form() {
   const formRef = useRef(null)
 
-  async function handleUserRegister(data) {
-    try {
-      formRef.current.setErrors({});
+  async function handleUserRegister(data) { 
+    console.log(data)
 
-      await schema.validate(data, { abortEarly: false });
+    const { email, password } = data;
 
-      console.log(data)
-    } catch (err) {
-      const validationErrors = {};
+    // CRIAR AUTENTICAÇÃO DE USUARIO - EMAIL E SENHA
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => Alert.alert("Conta", "Cadastrado com sucesso!"))
+      .catch((error) => console.log(error))
+
+    
+
+
+    // try {
+    //   formRef.current.setErrors({});
+
+    //   await schema.validate(data, { abortEarly: false });
+
+    //   console.log(data)
+    // } catch (err) {
+    //   const validationErrors = {};
       
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach(error => {
-          validationErrors[error.path] = error.message;
-        });
+    //   if (err instanceof Yup.ValidationError) {
+    //     err.inner.forEach(error => {
+    //       validationErrors[error.path] = error.message;
+    //     });
 
-        formRef.current.setErrors(validationErrors);
-        console.log(validationErrors);
-      }
-    }
+    //     formRef.current.setErrors(validationErrors);
+    //     console.log(validationErrors);
+    //   }
+    // }
   }
 
   return (
