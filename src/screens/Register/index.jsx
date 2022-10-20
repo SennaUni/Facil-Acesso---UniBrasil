@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/elements'
 
@@ -18,17 +18,18 @@ export function Register() {
     <Container>
       <Content>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={height + 25} enabled>
+          <KeyboardAvoidingView 
+            behavior="position" 
+            keyboardVerticalOffset={30} 
+            style={{ flex: 1 }}
+            enabled
+          >
             <>
               <Header 
                 title='Crie sua conta'
                 subTitle='Faça seu cadastro de forma rápida e fácil'
               />
               <Form />
-              {/* <Buttom 
-                title='Ir para Login'
-                onPress={() => navigate.navigate('login')}
-              /> */}
             </>
           </KeyboardAvoidingView>
         </TouchableWithoutFeedback>

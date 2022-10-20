@@ -7,9 +7,13 @@ export const Container = styled.TouchableOpacity`
   justify-content: center;
   background-color: #DC1637;
   margin-bottom: 8px;
+  flex-direction: row;
+
+  opacity: ${ props => props.loading ? 0.6 : 1 };
 `;
 
 export const Title = styled.Text`
   font-size: 15px;
   color: #FFFFFF;
+  margin: 0 8px;
 `;
