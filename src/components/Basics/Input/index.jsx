@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 import { Feather } from '@expo/vector-icons';
+
 import { useField } from '@unform/core'
 
 import { Container, IconContainer, InputText, Error } from './styles';
