@@ -3,6 +3,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, FlatList , SafeAreaView, TextInput} from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+import { Card } from '../components/Card';
+
 export function Principal() {
   const navigate = useNavigation();
   const route = useRoute(); // para parametros
@@ -11,7 +13,7 @@ export function Principal() {
   const list = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   const data = [
-    {id: 1, label:'Guilherme'},
+    {id: 1, label:'Guilherme', estabelecimento: 'Pao da Vó', endereco : 'Rua Augusto, 863'},
     {id: 2, label:'Gabriel'},
     {id: 3, label:'Renan'},
     {id: 4, label:'Renan'},
@@ -58,7 +60,7 @@ export function Principal() {
   )
 
   return (
-    <View style={{ backgroundColor: 'blue', flex: 1 }}>
+    <ScrollView style={{ backgroundColor: 'blue', flex: 1 }}>
        <View>
           <View
             style={{ backgroundColor: 'purple'}}
@@ -107,8 +109,9 @@ export function Principal() {
        <View style={{
          justifyContent: 'center',
          alignItems: 'center',
-         flexDirection: 'row'
-
+         flexDirection: 'row',
+         marginBottom: 15
+      
        }}>
          <Text
           style={{
@@ -141,6 +144,12 @@ export function Principal() {
           </Text>
          </TouchableOpacity>
        </View>
-    </View>
+       <FlatList 
+            data={data}
+            renderItem={({item}) => <Card item={item}/>}
+            keyExtractor={item => item.id}
+            style={{ backgroundColor: 'red', flex: 1}}
+          />
+    </ScrollView>
   );
 }

@@ -1,24 +1,24 @@
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import { Container, Title } from './styles';
+import { Container, Button, Title } from './styles';
 
 export function Buttom({ title, loading = false, ...rest }) {
   return (
-    <>
+    <Container colors={[ '#6C33A3', '#8241B8' ]}>
       { loading ? (
-        <Container {...rest} loading={true} disabled={true}>
+        <Button {...rest} loading={true} disabled={true}>
           <ActivityIndicator
             size='small'
             color='#FFF'
           />
           <Title>Loading</Title>
-        </Container>
+        </Button>
       ) : (
-        <Container {...rest} >
+        <Button {...rest} >
           <Title>{title}</Title>
-        </Container>
+        </Button>
       )}
-    </>
+    </Container>
   );
 }

@@ -4,14 +4,14 @@ import { TouchableOpacity, Modal, FlatList, SafeAreaView } from 'react-native';
 
 import { FontAwesome } from '@expo/vector-icons';
 
-import { useField } from '@unform/core'
+import { useField } from '@unform/core';
 
 import { Label, Container, ComboBox, ModalHeader, SelectTitle, ModalTitle, ModalClose } from './styles';
 
 export function Select({ name, options, text, label, OptionComponent }) {
   const selectRef = useRef(null)
 
-  const { fieldName, registerField, defaultValue, error } = useField(name);
+  // const { fieldName, registerField } = useField('teste');
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
@@ -29,23 +29,23 @@ export function Select({ name, options, text, label, OptionComponent }) {
     )
   }
 
-  useEffect(() => {
-    registerField({
-      name: fieldName,
-      ref: selectRef.current,
-      path: 'value',
-      getValue: ref => {
-        return ref.value || ''
-      },
-      setValue: (ref, value) => {
-        ref.setNativeProps({ text: value });
-        ref.value = value
-      },
-      clearValue: ref => {
-        ref.value = ''
-      },
-    })
-  }, [fieldName, registerField])
+  // useEffect(() => {
+  //   registerField({
+  //     name: fieldName,
+  //     ref: selectRef.current,
+  //     path: 'value',
+  //     getValue: ref => {
+  //       return ref.value || ''
+  //     },
+  //     setValue: (ref, value) => {
+  //       ref.setNativeProps({ text: value });
+  //       ref.value = value
+  //     },
+  //     clearValue: ref => {
+  //       ref.value = ''
+  //     },
+  //   })
+  // }, [fieldName, registerField])
 
   return (
     <>

@@ -1,13 +1,22 @@
 import styled from 'styled-components/native';
 
-import { StatusBarm } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-export const Content = styled.ScrollView`
+export const Content = styled(LinearGradient)`
   flex: 1;
-  background-color: #F4F5F6;
-  padding: 0 28px;
+`;
+
+export const HeaderTitle = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Container = styled.SafeAreaView`
   flex: 1;
 `;
+
+export const FormView = styled.View`
+  justify-content: flex-end;
+  flex: 2;
+`

@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons';
 
 import { useField } from '@unform/core'
 
-import { Container, IconContainer, InputText, Error } from './styles';
+import { Container, IconContainer, InputText, ErrorContainer, Error } from './styles';
 
 export function Input({ name, icon,...rest }) {
   const inputRef = useRef(null)
@@ -53,7 +53,7 @@ export function Input({ name, icon,...rest }) {
           <Feather
             name={icon}
             size={24}
-            color={(isFocused || isFilled) ? '#DC1637' : '#AEAEB3'}
+            color={(isFocused || isFilled) ? '#6441A5' : '#AEAEB3'}
           />
         </IconContainer>
 
@@ -67,7 +67,15 @@ export function Input({ name, icon,...rest }) {
           {...rest}
         />
       </Container>
-      { error && <Error>{error}</Error>}
+      { error && 
+        <ErrorContainer>
+           <Feather 
+            name="alert-triangle" 
+            size={24} 
+            color="#DC1637"
+          />
+          <Error>{error}</Error>
+        </ErrorContainer>}
     </>
   );
 }

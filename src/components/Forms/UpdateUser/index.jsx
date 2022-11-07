@@ -1,18 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
+
+import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
+
 import { Form as Unform } from '@unform/mobile';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
 
-import { Alert } from 'react-native';
-
-import { Buttom } from '../../Basics/Buttom';
 import { Input } from '../../Basics/Input';
+import { ArrowButtom } from '../../Basics/ArrowButtom';
+import { Header } from '../../Header';
+import { useToast } from '../../../hooks/toast';
 
 import { Container } from './styles';
 
+const { height, width } = Dimensions.get('window');
+
 export function Form() {
   const formRef = useRef(null)
+
+  const [loading, setLoading] = useState(false);
+
+  const { addToast } = useToast();
 
   async function handleUpdateUser(data) {
     try {
@@ -37,34 +46,49 @@ export function Form() {
 
   return (
     <Container>
-      <Unform ref={formRef} onSubmit={handleUpdateUser}>
-        <Input
-          name="name"
-          icon="user"
-          placeholder="Nome"
-        />
-        <Input
-          name="email"
-          icon="mail"
-          placeholder="E-mail"
-          keyboardType="email-address"
-          autoCapitalize='none' // primeira letra começa como minuscula
-        />
-        <Input
-          name="phoneNumber"
-          icon="user"
-          placeholder="Telefone para contato"
-        />
-        <Input
-          name="accessibility"
-          icon="lock"
-          placeholder="PRECISA SER UM SELECT"
-        />
-        <Buttom
-          title="Editar"
-          onPress={() => formRef.current.submitForm()}
-        />
-      </Unform>
+      <KeyboardAvoidingView behavior="position" enabled>
+        <View
+            style={{
+              position: 'absolute',
+              top: -30,
+              left: width - 120,
+            }}
+          >
+            <ArrowButtom
+              loading={loading}
+              gradient={[ '#A88BEB', '#8241B8' ]}
+              onPress={() => formRef.current.submitForm()}
+            />
+          </View>
+
+          <Header 
+            title='Alterar meus dados'
+          />
+        <Unform ref={formRef} onSubmit={handleUpdateUser}>
+          <Input
+            name="name"
+            icon="user"
+            placeholder="Nome"
+          />
+          <Input
+            name="email"
+            icon="mail"
+            placeholder="E-mail"
+            keyboardType="email-address"
+            autoCapitalize='none' // primeira letra começa como minuscula
+          />
+          <Input
+            name="phoneNumber"
+            icon="user"
+            placeholder="Telefone para contato"
+          />
+          <Input
+            name="accessibility"
+            icon="lock"
+            placeholder="PRECISA SER UM SELECT"
+          />
+        </Unform>
+      </KeyboardAvoidingView>
     </Container>
   )
 }

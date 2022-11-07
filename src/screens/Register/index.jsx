@@ -4,11 +4,10 @@ import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, Platform } fr
 import { useNavigation } from '@react-navigation/native';
 import { useHeaderHeight } from '@react-navigation/elements'
 
-import { Buttom } from '../../components/Basics/Buttom';
 import { Header } from '../../components/Header';
 import { Form } from '../../components/Forms/Register';
 
-import { Container, Content } from './styles';
+import { Container, Content,FormView, HeaderTitle } from './styles';
 
 export function Register() {
   const navigate = useNavigation();
@@ -16,23 +15,19 @@ export function Register() {
 
   return (
     <Container>
-      <Content>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <KeyboardAvoidingView 
-            behavior="position" 
-            keyboardVerticalOffset={30} 
-            style={{ flex: 1 }}
-            enabled
-          >
-            <>
-              <Header 
-                title='Crie sua conta'
-                subTitle='Faça seu cadastro de forma rápida e fácil'
-              />
-              <Form />
-            </>
-          </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+      <Content colors={[ '#6C33A3', '#8241B8' ]}>
+        <HeaderTitle>
+          <Header 
+             title='Crie sua conta'
+             subTitle='Faça seu cadastro de forma rápida e fácil'
+             color='#FFF'
+          />
+        </HeaderTitle>
+        <FormView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Form />
+          </TouchableWithoutFeedback>
+        </FormView>
       </Content>
     </Container>
   );

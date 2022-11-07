@@ -1,19 +1,30 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+
+import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
+
 import { Form as Unform } from '@unform/mobile';
+
 import firestore from '@react-native-firebase/firestore';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
 
-import { Alert } from 'react-native';
-
-import { Buttom } from '../../Basics/Buttom';
 import { Input } from '../../Basics/Input';
+import { PasswordInput } from '../../Basics/PasswordInput';
+import { ArrowButtom } from '../../Basics/ArrowButtom';
+import { Header } from '../../Header';
+import { useToast } from '../../../hooks/toast';
 
 import { Container } from './styles';
 
+const { height, width } = Dimensions.get('window');
+
 export function Form() {
-  const formRef = useRef(null)
+  const formRef = useRef(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const { addToast } = useToast();
 
   async function handleCommentRegister(data) {
     try {
@@ -64,7 +75,7 @@ export function Form() {
           }
         })
 
-        // console.log(data);
+        console.log(data);
         // setar essa data em algum lugar
       })
     
@@ -81,40 +92,53 @@ export function Form() {
 
   return (
     <Container>
-      <Unform ref={formRef} onSubmit={handleCommentRegister}>
-        <Input
-          name="name"
-          icon="user"
-          placeholder="Nome estabalecimento"
-        />
-        <Input
-          name="address"
-          icon="mail"
-          placeholder="Endereço"
-        />
-        <Input
-          name="rating"
-          icon="lock"
-          placeholder="PRECISA SER UM SELECT"
-        />
-        <Input
-          name="comment"
-          icon="lock"
-          placeholder="VER SE EXISTE TEXT AREA"
-          multiline
-          numberOfLines={4}
-        />
-        <Input
-          name="image"
-          icon="lock"
-          placeholder="INSERIR IMAGEM"
-        />
-
-        <Buttom
-          title="Cadastrar"
+      <View
+        style={{
+          position: 'absolute',
+          top: -30,
+          left: width - 120,
+        }}
+      >
+        <ArrowButtom
+          loading={loading}
+          gradient={[ '#A88BEB', '#8241B8' ]}
           onPress={() => formRef.current.submitForm()}
         />
-      </Unform>
+        </View>
+      <Header 
+        title='Criar comentário'
+      />
+      <KeyboardAvoidingView behavior="position" enabled>
+        <Unform ref={formRef} onSubmit={handleCommentRegister}>
+          <Input
+            name="name"
+            icon="user"
+            placeholder="Nome estabalecimento"
+          />
+          <Input
+            name="address"
+            icon="mail"
+            placeholder="Endereço"
+          />
+          <Input
+            name="rating"
+            icon="lock"
+            placeholder="PRECISA SER UM SELECT"
+          />
+          <Input
+            name="comment"
+            icon="lock"
+            placeholder="VER SE EXISTE TEXT AREA"
+            multiline
+            // numberOfLines={4}
+          />
+          <Input
+            name="image"
+            icon="lock"
+            placeholder="INSERIR IMAGEM"
+          />
+        </Unform>
+      </KeyboardAvoidingView>
     </Container>
   )
 }

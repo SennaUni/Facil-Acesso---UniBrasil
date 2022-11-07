@@ -5,22 +5,25 @@ import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-
 import { Header } from '../../components/Header';
 import { Form } from '../../components/Forms/UpdatePassword';
 
-import { Container } from './styles';
+import { Container, Content, FormView, HeaderTitle } from './styles';
 
 export function UpdatePassword() {
   return (
     <Container>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView behavior="position" enabled>
-          <>
-            <Header 
+      <Content colors={[ '#6C33A3', '#8241B8' ]}>
+        <HeaderTitle>
+          <Header 
               title='Atualizar minha senha'
               subTitle='Insira sua senha atual e nova nos campos abaixo'
-            />
+              color='#FFF'
+          />
+        </HeaderTitle>
+        <FormView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Form />
-          </>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </FormView>
+      </Content>
     </Container>
   );
 }

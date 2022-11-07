@@ -1,26 +1,29 @@
 import React from 'react';
 
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { Header } from '../../components/Header';
 import { Form } from '../../components/Forms/UpdateUser';
 
-import { Container } from './styles';
+import { Container, Content, FormView, HeaderTitle } from './styles';
 
 export function UpdateUser() {
   return (
     <Container>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView behavior="position" enabled>
-          <>
-            <Header 
-              title='Atualizar meu perfil'
-              subTitle='Mantenha seus dados pessoais atualizados'
-            />
+      <Content colors={[ '#6C33A3', '#8241B8' ]}>
+        <HeaderTitle>
+          <Header 
+             title='Atualizar meu perfil'
+             subTitle='Mantenha seus dados pessoais atualizados'
+             color='#FFF'
+          />
+        </HeaderTitle>
+        <FormView>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Form />
-          </>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </FormView>
+      </Content>
     </Container>
   );
 }

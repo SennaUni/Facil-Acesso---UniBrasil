@@ -1,15 +1,21 @@
 import React from 'react';
 import { Container, Subtitle, Title } from './styles';
 
-export function Header({ title, subTitle }) {
+export function Header({ title, subTitle, color }) {
   return (
     <Container>
-      <Title>
+      <Title
+        color={color}
+      >
         {title}
       </Title>
-      <Subtitle>
+      {subTitle && (
+      <Subtitle
+        color={color}
+      >
         {subTitle}
       </Subtitle>
+      )}
     </Container>
   )
 }

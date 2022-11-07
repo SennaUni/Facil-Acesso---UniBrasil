@@ -24,17 +24,18 @@ export function DrawerRoutes() {
             drawerContent={props => <CustomDrawer {...props} />}
             screenOptions={{ 
                 headerShown: false,
-                drawerActiveBackgroundColor: '#000',
-                drawerActiveTintColor: '#FFF',
-                drawerInactiveTintColor: '#333',
-                drawerLabelStyle: { marginLeft: -20, fontSize: 15 }
+                drawerActiveBackgroundColor: '#FFF',
+                drawerActiveTintColor: '#6441A5',
+                drawerInactiveTintColor: '#FFF',
+                drawerLabelStyle: { marginLeft: -20, fontSize: 15 },
             }}
         >
             <Screen 
-                name='register' 
+                name='register'
                 component={Register} 
                 options={{
-                    drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />
+                    drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                    title: 'Tela de Registro'
                 }}
             />
             <Screen 

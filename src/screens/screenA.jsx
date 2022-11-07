@@ -57,9 +57,10 @@ export function ScreenA() {
         /> */}
         <Select 
           options={Lista}
+          name="senna_select"
           text="Selecione uma opção "
           label="Usuario"
-          OptionComponente={OptionSelect}
+          OptionComponent={OptionSelect}
         />
     </View>
   );

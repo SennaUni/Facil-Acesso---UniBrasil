@@ -1,21 +1,31 @@
 import React, { useRef, useEffect, useState } from 'react';
+
+import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
+
 import { Form as Unform } from '@unform/mobile';
+
 import auth from '@react-native-firebase/auth';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
 
-import { Alert } from 'react-native';
-
 import { Buttom } from '../../Basics/Buttom';
-import { Input } from '../../Basics/Input';
+import { PasswordInput } from '../../Basics/PasswordInput';
+import { ArrowButtom } from '../../Basics/ArrowButtom';
+import { Header } from '../../Header';
+import { useToast } from '../../../hooks/toast';
 
 import { Container } from './styles';
+
+const { height, width } = Dimensions.get('window');
 
 export function Form() {
   const formRef = useRef(null)
 
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const { addToast } = useToast();
 
   async function handleUpdatePassword(data) {
     try {
@@ -51,30 +61,42 @@ export function Form() {
 
   return (
     <Container>
-     <Unform ref={formRef} onSubmit={handleUpdatePassword}>
-        <Input
-          name="oldPassword"
-          icon="lock"
-          placeholder="Senha"
-          secureTextEntry
+      <KeyboardAvoidingView behavior="position" enabled>
+      <View
+          style={{
+            position: 'absolute',
+            top: -30,
+            left: width - 120,
+          }}
+        >
+          <ArrowButtom
+            loading={loading}
+            gradient={[ '#A88BEB', '#8241B8' ]}
+            onPress={() => formRef.current.submitForm()}
+          />
+        </View>
+
+        <Header 
+          title='Alterar senha'
         />
-        <Input
-          name="newPassword"
-          icon="lock"
-          placeholder="Senha"
-          secureTextEntry
-        />
-        <Input
-          name="newPasswordConfirm"
-          icon="lock"
-          placeholder="Senha"
-          secureTextEntry
-        />
-        <Buttom
-          title="Cadastrar"
-          onPress={() => formRef.current.submitForm()}
-        />
-      </Unform>
+        <Unform ref={formRef} onSubmit={handleUpdatePassword}>
+          <PasswordInput
+            name="oldPassword"
+            icon="lock"
+            placeholder="Senha atual"
+          />
+          <PasswordInput
+            name="newPassword"
+            icon="lock"
+            placeholder="Nova senha"
+          />
+          <PasswordInput
+            name="newPasswordConfirm"
+            icon="lock"
+            placeholder="Confirmar nova senha"
+          />
+        </Unform>
+      </KeyboardAvoidingView>
     </Container>
   )
 }

@@ -1,7 +1,22 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+import LinearGradient from 'react-native-linear-gradient';
+
+export const Content = styled(LinearGradient)`
   flex: 1;
-  background-color: #F4F5F6;
-  padding: 24px;
 `;
+
+export const HeaderTitle = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Container = styled.SafeAreaView`
+  flex: 1;
+`;
+
+export const FormView = styled.View`
+  justify-content: flex-end;
+  flex: 2;
+`
