@@ -4,12 +4,13 @@ import { KeyboardAvoidingView, View, Dimensions, Text } from 'react-native';
 
 import { Form as Unform } from '@unform/mobile';
 
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+
 import auth from '@react-native-firebase/auth';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
 
-import { Buttom } from '../../Basics/Buttom';
 import { Input } from '../../Basics/Input';
 import { ArrowButtom } from '../../Basics/ArrowButtom';
 import { Header } from '../../Header';
@@ -74,6 +75,14 @@ export function Form() {
     }
   }
 
+  useFocusEffect(() => {
+
+    formRef.current.setData({
+      email: '',
+    })
+
+  })
+
   return (
     <Container>
       <KeyboardAvoidingView behavior="position" enabled>
@@ -133,8 +142,7 @@ export function Form() {
               color: '#FFF',
             }}
           >
-            Quem sabe utilizar esse local para preencher espaço e colocar um informativo de como funciona essa funcionalidade, como por exemplo
-            seŕa enviado para o email informado um link onde será realizado a alteração de senha.
+            Informe seu e-mail no campo acima. Em seguira será enviado um e-mail no endereço informado. Em seguida acesse o link enviado no e-mail para resetar a senha..
           </Text>
         </View>
       </KeyboardAvoidingView>

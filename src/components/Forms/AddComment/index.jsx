@@ -10,7 +10,6 @@ import * as Yup from 'yup';
 import { schema } from './schema';
 
 import { Input } from '../../Basics/Input';
-import { PasswordInput } from '../../Basics/PasswordInput';
 import { ArrowButtom } from '../../Basics/ArrowButtom';
 import { Header } from '../../Header';
 import { useToast } from '../../../hooks/toast';

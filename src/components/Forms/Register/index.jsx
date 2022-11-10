@@ -4,6 +4,8 @@ import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
 
 import { Form as Unform } from '@unform/mobile';
 
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+
 import auth from '@react-native-firebase/auth'
 
 import firestore from '@react-native-firebase/firestore';
@@ -29,19 +31,21 @@ export function Form() {
   const { addToast } = useToast();
 
   async function handleFirestoreUser({ name, email, phoneNumber, accessibility, password }) {
-    firestore()
-      .collection('users')
-      .add({
-        name,
-        email,
-        phoneNumber,
-        accessibility,
-        password,
-        create_at: firestore.FieldValue.serverTimestamp()
-      })
-      .then(async () => { 
-        auth()
-        .createUserWithEmailAndPassword(email, password);
+    auth()
+    .createUserWithEmailAndPassword(email, password)
+      .then(async (data) => { 
+       
+        firestore()
+          .collection('users')
+          .add({
+            id: data.user.uid,
+            name,
+            email,
+            phoneNumber,
+            accessibility,
+            password,
+            create_at: firestore.FieldValue.serverTimestamp()
+          })
 
         const success = {
           type: 'success', 
@@ -88,9 +92,22 @@ export function Form() {
     } 
   }
 
+  useFocusEffect(() => {
+
+    formRef.current.setData({
+      name: '',
+      email: '',
+      phoneNumber: '',
+      accessibility: '',
+      password: '',
+      passwordConfirm: '',
+    })
+
+  })
+
   return (
     <Container>
-      <KeyboardAvoidingView behavior="position" enabled>
+      {/* <KeyboardAvoidingView behavior="position" enabled> */}
         <View
           style={{
             position: 'absolute',
@@ -143,7 +160,7 @@ export function Form() {
             placeholder="Confirme a senha"
           />
         </Unform>
-      </KeyboardAvoidingView>
+      {/* </KeyboardAvoidingView> */}
     </Container>
   )
 }

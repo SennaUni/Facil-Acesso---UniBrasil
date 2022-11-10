@@ -4,14 +4,13 @@ import { Form as Unform } from '@unform/mobile';
 
 import auth from '@react-native-firebase/auth';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { View, Dimensions, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
 
-import { Buttom } from '../../Basics/Buttom';
 import { FacebookButton } from '../../FacebookButton';
 import { GmailButton } from '../../GmailButton';
 import { GithubButton } from '../../GithubButton';
@@ -87,6 +86,15 @@ export function Form() {
       setLoading(false)
     } 
   }
+
+  useFocusEffect(() => {
+
+    formRef.current.setData({
+      email: '',
+      password: '',
+    })
+
+  })
 
   return (
     <Container>

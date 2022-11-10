@@ -11,7 +11,7 @@ import { Label, Container, ComboBox, ModalHeader, SelectTitle, ModalTitle, Modal
 export function Select({ name, options, text, label, OptionComponent }) {
   const selectRef = useRef(null)
 
-  // const { fieldName, registerField } = useField('teste');
+  // const { fieldName, registerField } = useField(name);
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
