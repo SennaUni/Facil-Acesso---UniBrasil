@@ -4,11 +4,11 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import { Container, Picture, Label } from './styles';
 
-export function OptionSelect({ item, selectedValue, onPress }) {
+export function OptionSelectAccessibility({ item, selectedValue, onPress }) {
 
   return (
     <Container 
-      backGround={item.id === selectedValue?.id ? '#EEE' : '#FFF'}
+      backGround={item.id === selectedValue?.id ? '#8241B8' : '#FFF'}
       onPress={onPress}
     >
       <Picture 
@@ -17,7 +17,7 @@ export function OptionSelect({ item, selectedValue, onPress }) {
         }}
       />
       <Label 
-        fontWeight={item.id === selectedValue?.id ? 'bold' : 'normal'} 
+        color={item.id === selectedValue?.id ? '#FFF' : '#555'}
       >
         {item.name}
       </Label>

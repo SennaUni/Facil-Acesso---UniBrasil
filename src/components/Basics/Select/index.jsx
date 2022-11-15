@@ -1,17 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { TouchableOpacity, Modal, FlatList, SafeAreaView } from 'react-native';
+import { TouchableOpacity, Modal, FlatList } from 'react-native';
 
 import { FontAwesome } from '@expo/vector-icons';
 
-import { useField } from '@unform/core';
+import { Feather } from '@expo/vector-icons';
 
-import { Label, Container, ComboBox, ModalHeader, SelectTitle, ModalTitle, ModalClose } from './styles';
+import { Header } from '../../../components/Header';
 
-export function Select({ name, options, text, label, OptionComponent }) {
-  const selectRef = useRef(null)
+import { Container, ComboBox, IconContainer, ModalContent, ModalHeader, ModalTitle, ModalSelect, SelectTitle } from './styles';
 
-  // const { fieldName, registerField } = useField(name);
+export function Select({ icon, options, text, OptionComponent, onChange }) {
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedValue, setSelectedValue] = useState();
@@ -23,48 +22,37 @@ export function Select({ name, options, text, label, OptionComponent }) {
         selectedValue={selectedValue}
         onPress={() => {
           setSelectedValue(item);
+          onChange(item);
           setOpenModal(false);
         }}
       />
     )
   }
 
-  // useEffect(() => {
-  //   registerField({
-  //     name: fieldName,
-  //     ref: selectRef.current,
-  //     path: 'value',
-  //     getValue: ref => {
-  //       return ref.value || ''
-  //     },
-  //     setValue: (ref, value) => {
-  //       ref.setNativeProps({ text: value });
-  //       ref.value = value
-  //     },
-  //     clearValue: ref => {
-  //       ref.value = ''
-  //     },
-  //   })
-  // }, [fieldName, registerField])
-
   return (
     <>
-      <Label>
-        {label}
-      </Label>
       <Container >
+        <IconContainer>
+         <Feather
+            name={icon}
+            size={24}
+            color={selectedValue ? '#6441A5' : '#AEAEB3'}
+          />
+        </IconContainer>
+
         <ComboBox
           onPress={() => setOpenModal(true)}
         >
           <SelectTitle 
             numberOfLines={1}
+            color={selectedValue ? '#000' : '#AEAEB3'}
           >
             {selectedValue?.name || text}
           </SelectTitle>
           <FontAwesome
             name='angle-down'
             size={26}
-            color={'#000'}
+            color={selectedValue ? '#6441A5' : '#AEAEB3'}
           />
         </ComboBox>
         <Modal 
@@ -72,34 +60,33 @@ export function Select({ name, options, text, label, OptionComponent }) {
           visible={openModal}
           onRequestClose={() => setOpenModal(false)}
         >
-          <SafeAreaView>
+          <ModalContent colors={[ '#6C33A3', '#8241B8' ]}>
             <ModalHeader>
               <TouchableOpacity
                 onPress={() => setOpenModal(false)}
+                style={{ }}
               >
                 <FontAwesome
-                  name='angle-down'
+                  name='close'
                   size={30}
-                  color={'#000'}
+                  color={'#FFF'}
                 />
               </TouchableOpacity>
               <ModalTitle>
-                {text}
+                <Header 
+                  title='Selecione sua acessibilidade'
+                  color='#FFF'
+                />
               </ModalTitle>
-              <TouchableOpacity
-                onPress={() => setOpenModal(false)}
-              >
-                <ModalClose>
-                  Cancelar
-                </ModalClose>
-              </TouchableOpacity>
             </ModalHeader>
-            <FlatList 
-              data={options ?? []}
-              keyExtractor={item => String(item.id)}
-              renderItem={({ item }) => renderOption(item) }
-            />
-          </SafeAreaView>
+            <ModalSelect>
+              <FlatList 
+                data={options ?? []}
+                keyExtractor={item => String(item.id)}
+                renderItem={({ item }) => renderOption(item) }
+              />
+            </ModalSelect>
+          </ModalContent>
         </Modal>
       </Container>
     </>

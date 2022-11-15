@@ -2,85 +2,55 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 
 import auth from '@react-native-firebase/auth';
 
-import { useToast } from '../hooks/toast';
+import firestore from '@react-native-firebase/firestore';
 
 const AuthContex = createContext({});
 
 const AuthProvider = ({ children }) => {
-  const [data, setData] = useState([]);
 
-  const signIn = useCallback( async ({ email, password }) => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
+  const [dataAuth, setDataAuth] = useState({
+    email: '',
+    password: '',
+    uid: '',
+    accessibility: '',
+    name: '',
+    phoneNumber: '',
+  });
 
-        // setData();
+  const signIn = useCallback( async ({ email, password, uid }) => {
+    const userToEdit = await firestore()
+        .collection('users')
+        .doc(uid)
+        .get();
 
-        const success = {
-          type: 'success', 
-          title: 'Autenticado com sucesso', 
-          description: 'Bem vindo',
-        }
-        addToast(success);
+        console.log(userToEdit)
 
-        navigate.navigate('principal')
-      })
-      .catch(() => {
-        const error = {
-          type: 'error', 
-          title: 'Falha na autenticação', 
-          description: 'Usuário ou senha inválidos',
-        }
-        addToast(error);
-      })
+    const { accessibility, name, phoneNumber } = userToEdit.data();
+  
+    setDataAuth({
+      email,
+      password,
+      uid,
+      accessibility,
+      name,
+      phoneNumber,
+    })
+
   }, []);
 
   const signOut = useCallback(() => {
-    auth()
-      .signOut()
-      .then(() => {
-
-         // setData();
-
-        const success = {
-          type: 'success', 
-          title: 'LogOff realizdo com sucesso', 
-          description: 'Até mais',
-        }
-        addToast(success);
-
-        navigate.navigate('principal')
-      })
-      .catch(() => {
-        const error = {
-          type: 'error', 
-          title: 'Falha na operação', 
-          description: 'Não foi possível realizar o LogOff',
-        }
-        addToast(error);
-      })
-  }, []);
-
-  const checkAuthUser = useCallback((user) => {
-      
-    // setData();
-
-  }, []);
-
-  const updateUser = useCallback((user) => {
-      
-    // setData();
-
+    auth().signOut();
+    setDataAuth([])
   }, []);
 
   return (
-    <AuthContex.Provider value={{ addToast, removeToast }}>
+    <AuthContex.Provider value={{ dataAuth, signIn }}>
       {children}
     </AuthContex.Provider>
   )
 }
 
-const useToast = () => {
+const useAuth = () => {
   const contex = useContext(AuthContex);
 
   if (!contex) {
@@ -90,4 +60,4 @@ const useToast = () => {
   return contex;
 }
 
-export { AuthProvider, useToast };
+export { AuthProvider, useAuth };

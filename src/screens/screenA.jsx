@@ -4,7 +4,7 @@ import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { Select } from '../components/Basics/Select';
-import { OptionSelect } from '../components/Basics/OptionSelect';
+import { OptionSelect } from '../components/Basics/OptionSelectAccessibility';
 
 export function ScreenA() {
     const navigate = useNavigation();

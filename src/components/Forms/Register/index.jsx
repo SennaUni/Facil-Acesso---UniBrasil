@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 
-import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
+import { View, Dimensions } from 'react-native';
 
 import { Form as Unform } from '@unform/mobile';
 
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import auth from '@react-native-firebase/auth'
 
@@ -21,7 +21,7 @@ import { useToast } from '../../../hooks/toast';
 
 import { Container } from './styles';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export function Form() {
   const formRef = useRef(null);
@@ -37,8 +37,8 @@ export function Form() {
        
         firestore()
           .collection('users')
-          .add({
-            id: data.user.uid,
+          .doc(data.user.uid)
+          .set({
             name,
             email,
             phoneNumber,

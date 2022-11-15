@@ -22,10 +22,11 @@ import { PasswordInput } from '../../Basics/PasswordInput';
 import { Header } from '../../../components/Header';
 import { Divider } from '../../../components/Divider';
 import { useToast } from '../../../hooks/toast';
+import { useAuth } from '../../../hooks/auth';
 
 import { Container, Options, OptionsText, LoginContainer, Logins } from './styles';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export function Form() {
   const formRef = useRef(null);
@@ -35,34 +36,44 @@ export function Form() {
   const [loading, setLoading] = useState(false);
 
   const { addToast } = useToast();
+  const { signIn } = useAuth();
 
-  async function handleFirebaseAuth({ email, password }) {
+  async function handleFirebaseAuth(data) {
+    const { email, password} = data;
+
     auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          const success = {
-            type: 'success', 
-            title: 'Autenticado com sucesso', 
-            description: 'Bem vindo',
-          }
-          addToast(success);
+    .signInWithEmailAndPassword(email, password)
+    .then(async (value) => {
+      const userData = {
+        email: data.email,
+        password: data.password,
+        uid: value.user.uid,
+      }
+      
+      await signIn(userData);
 
-          navigate.navigate('principal')
-        })
-        .catch(() => {
-          const error = {
-            type: 'error', 
-            title: 'Falha na autenticação', 
-            description: 'Usuário ou senha inválidos',
-          }
-          addToast(error);
-        })
-        .finally(() => setLoading(false));
+      const success = {
+        type: 'success', 
+        title: 'Autenticado com sucesso', 
+        description: 'Bem vindo',
+      }
+
+      addToast(success); 
+      
+      navigate.navigate('principal')
+    })
+    .catch((err) => { console.log(err)
+      const error = {
+        type: 'error', 
+        title: 'Falha na autenticação', 
+        description: 'Usuário ou senha inválidos',
+      }
+      addToast(error);
+    })
+    .finally(() => setLoading(false));    
   }
 
   async function handleUserLogin(data) {
-    console.log(data)
-
     setLoading(true);
 
     try {
@@ -82,18 +93,15 @@ export function Form() {
 
         formRef.current.setErrors(validationErrors);
       } 
-
       setLoading(false)
     } 
   }
 
   useFocusEffect(() => {
-
     formRef.current.setData({
       email: '',
       password: '',
     })
-
   })
 
   return (

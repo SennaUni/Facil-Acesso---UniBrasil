@@ -6,42 +6,93 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { Form as Unform } from '@unform/mobile';
 
-import auth from '@react-native-firebase/auth';
+import { Feather } from '@expo/vector-icons';
 
 import firestore from '@react-native-firebase/firestore';
+
+import auth from '@react-native-firebase/auth';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
 
 import { Input } from '../../Basics/Input';
 import { ArrowButtom } from '../../Basics/ArrowButtom';
+import { Select } from '../../Basics/Select';
 import { Header } from '../../Header';
+import { OptionSelectAccessibility } from '../../Basics/OptionSelectAccessibility';
 import { useToast } from '../../../hooks/toast';
+import { useAuth } from '../../../hooks/auth';
 
-import { Container } from './styles';
+import { Container, ErrorContainer, Error } from './styles';
 
 const { height, width } = Dimensions.get('window');
 
 export function Form() {
   const formRef = useRef(null)
 
-  const [user, setUser] = useState(null);
-  const [dataUser, setDataUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(true);
 
   const { addToast } = useToast();
+  const { dataAuth } = useAuth();
 
-  async function handleFirebaseUpdateUser({ accessibility, email, name, phoneNumber }) {
+  const Lista = [
+    {
+      id: '1',
+      avatarUrl: 'http://i.pravatar.cc/300',
+      name: 'Jhon Doe',
+      callType: 'video',
+      data: '31/01/2021',
+      status: 'Perdida',
+      stories: [
+        {
+          id: '1',
+          lido: true,
+        },
+        {
+          id: '2',
+          lido: false,
+        }
+      ]
+    },
+    {
+      id: '2',
+      avatarUrl: 'http://i.pravatar.cc/300',
+      name: 'Jhon Miranda',
+      callType: 'video',
+      data: '31/01/2021',
+      status: 'Perdida',
+      stories: [
+        {
+          id: '3',
+          lido: true,
+        },
+        {
+          id: '4',
+          lido: false,
+        }
+      ]
+    }
+  ];
+
+  function onChange(value) {
+    console.log(value)
+  }
+
+  async function handleFirebaseUpdateUser({ email, name, phoneNumber }) {
     firestore()
       .collection('users')
-      .doc(dataUser.id)
+      .doc(dataAuth.uid)
       .update({
         name,
         email,
         phoneNumber,
-        accessibility,
+        accessibility: '',
       })
       .then(() => {
+        const user = auth().currentUser;
+
+        user.updateEmail(email);
 
         const success = {
           type: 'success', 
@@ -52,8 +103,7 @@ export function Form() {
         addToast(success);
 
       })
-      .catch(() => {
-        
+      .catch((err) => {
         const error = {
           type: 'error', 
           title: 'Ocorreu um erro', 
@@ -61,21 +111,19 @@ export function Form() {
         }
 
         addToast(error);
-
       })
       .finally(() => setLoading(false));
   }
 
   async function handleUpdateUser(data) {
     try {
-      console.log(data)
       formRef.current.setErrors({});
 
       await schema.validate(data, { abortEarly: false });
 
       await handleFirebaseUpdateUser(data);
 
-    } catch (err) {
+    } catch (err) { console.log(err)
       const validationErrors = {};
       
       if (err instanceof Yup.ValidationError) {
@@ -89,46 +137,14 @@ export function Form() {
     }
   }
 
-  useFocusEffect(useCallback (() => {
-    auth()
-      .onAuthStateChanged(setUser);
-
-    // console.log(user);
-
-    async function getUserData() { 
-      if (!user) return; 
-
-      const userToEdit = await firestore()
-        .collection('users')
-        .where('id', '==', user.uid)
-        .get();
-
-      userToEdit.forEach((value) => {
-        setDataUser(value)
-        return;
-      })
-    }
-
-    getUserData();
-    
-    console.log(dataUser.id)
-
-    async function setUserData() { 
-      if (!dataUser) return; 
-
-      const { name, email, phoneNumber, accessibility } = dataUser;
-
-      formRef.current.setData({
-        name,
-        email,
-        phoneNumber,
-        accessibility,
-      })
-    }
-
-    setUserData();
-
-  }, [user]));
+  useFocusEffect(useCallback (() => { 
+    formRef.current.setData({
+      name: dataAuth.name,
+      email: dataAuth.email,
+      phoneNumber: dataAuth.phoneNumber,
+      accessibility: dataAuth.accessibility,
+    })
+  }, []));
 
   return (
     <Container>
@@ -168,11 +184,33 @@ export function Form() {
             icon="user"
             placeholder="Telefone para contato"
           />
-          <Input
+          {/* <Input
             name="accessibility"
             icon="lock"
             placeholder="PRECISA SER UM SELECT"
-          />
+          /> */}
+
+        <Select 
+          options={Lista}
+          icon="mail"
+          name="sennaSelect"
+          text="Selecione uma opção "
+          label="Usuario"
+          OptionComponent={OptionSelectAccessibility}
+          onChange={onChange}
+        />
+
+        { error && (
+          <ErrorContainer>
+            <Feather 
+              name="alert-triangle" 
+              size={24} 
+              color="#DC1637"
+            />
+              <Error> Selecione uma opção </Error>
+          </ErrorContainer>
+        )}
+
         </Unform>
       </KeyboardAvoidingView>
     </Container>

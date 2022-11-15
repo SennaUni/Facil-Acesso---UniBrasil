@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ScreenA } from '../screens/screenA';
 import { ScreenB } from '../screens/screenB';
+import { Principal } from '../screens/principal';
 
 const { Screen, Navigator, Group } = createNativeStackNavigator();
 
@@ -23,6 +24,13 @@ export function StackRoutes() {
                     headerTitleAlign: 'center',
                 }}
             />
+             <Screen 
+                name='principal'
+                component={Principal}
+                options={{
+                    drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />
+                }}
+            /> 
         </Navigator>
     )
 }

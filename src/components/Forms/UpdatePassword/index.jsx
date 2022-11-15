@@ -15,6 +15,7 @@ import { PasswordInput } from '../../Basics/PasswordInput';
 import { ArrowButtom } from '../../Basics/ArrowButtom';
 import { Header } from '../../Header';
 import { useToast } from '../../../hooks/toast';
+import { useAuth } from '../../../hooks/auth';
 
 import { Container } from './styles';
 
@@ -23,17 +24,18 @@ const { height, width } = Dimensions.get('window');
 export function Form() {
   const formRef = useRef(null)
 
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const { addToast } = useToast();
+  const { dataAuth } = useAuth();
 
   async function handleFirebaseUpdatePassword({ oldPassword, newPassword }) {
     auth()
-      .signInWithEmailAndPassword(user.email, oldPassword)
+      .signInWithEmailAndPassword(dataAuth.email, oldPassword)
       .then(() => {
-        
-        user.updatePassword(newPassword)
+        const user = auth().currentUser;
+
+        user.updatePassword(newPassword);
           
         const success = {
           type: 'success', 
@@ -42,10 +44,8 @@ export function Form() {
         }
 
         addToast(success);
-
       })
-      .catch(() => {
-        
+      .catch((err) => {
         const error = {
           type: 'error', 
           title: 'Ocorreu um erro', 
@@ -53,7 +53,6 @@ export function Form() {
         }
 
         addToast(error);
-
       })
       .finally(() => setLoading(false));
   }
@@ -80,47 +79,12 @@ export function Form() {
     }
   }
 
-  useFocusEffect(() => {
-    // PARA DESLOGAR
-    // auth()
-    //   .signOut()
-    //   .then(() => {
-    //     const success = {
-    //       type: 'success', 
-    //       title: 'LogOff realizdo com sucesso', 
-    //       description: 'Até mais',
-    //     }
-    //     addToast(success);
-
-    //     navigate.navigate('principal')
-    //   })
-    //   .catch(() => {
-    //     const error = {
-    //       type: 'error', 
-    //       title: 'Falha na operação', 
-    //       description: 'Não foi possível realizar o LogOff',
-    //     }
-    //     addToast(error);
-    //   })
-
-    const subscriber = auth().onAuthStateChanged(setUser);
-
-    // const userLogin = auth().currentUser; 
-
-    // console.log(userLogin)
-
-    if (user) {
-      console.log(user.email);
-      // user.updatePassword('123789');
-    }
-
+  useFocusEffect(() => { 
     formRef.current.setData({
       oldPassword: '',
       newPassword: '',
       newPasswordConfirm: '',
     })
-
-    return subscriber;
   });
 
   return (
