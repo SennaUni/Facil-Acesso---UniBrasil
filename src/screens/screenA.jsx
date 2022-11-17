@@ -3,8 +3,8 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { Select } from '../components/Basics/Select';
-import { OptionSelect } from '../components/Basics/OptionSelectAccessibility';
+// import { Select } from '../components/Basics/Select';
+// import { OptionSelect } from '../components/Basics/OptionSelect';
 
 export function ScreenA() {
     const navigate = useNavigation();
@@ -55,13 +55,13 @@ export function ScreenA() {
             title='Navegar para tela B'
             onPress={() => navigate.navigate('screenB', { name: "Senneca" })}
         /> */}
-        <Select 
+        {/* <Select 
           options={Lista}
           name="sennaSelect"
           text="Selecione uma opção "
           label="Usuario"
           OptionComponent={OptionSelect}
-        />
+        /> */}
     </View>
   );
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { Header } from '../../components/Header';
-import { Form } from '../../components/Forms/AddComment';
+import { Form } from '../../components/Forms/RegisterComment';
 
 import { Container, Content,FormView, HeaderTitle } from './styles';
 
@@ -14,7 +14,7 @@ export function RegisterComment() {
         <HeaderTitle>
           <Header 
             title='Realizar um comentário'
-            subTitle='Insira as informações sobre o estabalecimento abaixo'
+            subTitle='Insira as informações sobre o estabalecimento e suas acessibilidades abaixo'
             color='#FFF'
           />
         </HeaderTitle>

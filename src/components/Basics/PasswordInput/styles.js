@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components/native';
 export const Container = styled.View`
   flex-direction: row;
   padding: 0 20px;
-  margin: 10px 0;
+  margin: 5px 0;
 `;
 
 export const IconContainer = styled.View`
@@ -39,7 +39,7 @@ export const InputText = styled(TextInput)`
 export const ErrorContainer = styled.View`
   flex-direction: row;
   align-items: center;
-  margin: 3px 0 16px; 
+  margin: 5px 0 5px;  
   padding: 0 20px;
 `
 

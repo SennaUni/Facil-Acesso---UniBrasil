@@ -6,7 +6,7 @@ import { Feather } from '@expo/vector-icons';
 
 import { Container, Gradient } from './styles';
 
-export function ArrowButtom({ loading = false, gradient, ...rest }) {
+export function ArrowButtom({ loading = false, gradient, reverse = false, ...rest }) {
   return (
     <>
       { loading ? (
@@ -22,7 +22,7 @@ export function ArrowButtom({ loading = false, gradient, ...rest }) {
         <Container {...rest} >
           <Gradient loading={loading} colors={gradient}>
             <Feather
-              name={'arrow-right'}
+              name={reverse ? 'arrow-left' : 'arrow-right'}
               size={40}
               color={'#FFF'}
             />

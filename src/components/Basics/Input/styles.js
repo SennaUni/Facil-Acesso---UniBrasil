@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components/native';
 export const Container = styled.View`
   flex-direction: row;
   padding: 0 20px;
-  margin: 3px 0;
+  margin: 5px 0;
 `;
 
 export const IconContainer = styled.View`

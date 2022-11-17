@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 
 import { View, Dimensions } from 'react-native';
 
@@ -10,16 +10,20 @@ import auth from '@react-native-firebase/auth'
 
 import firestore from '@react-native-firebase/firestore';
 
+import { Feather } from '@expo/vector-icons';
+
 import * as Yup from 'yup';
 import { schema } from './schema';
 
 import { Input } from '../../Basics/Input';
 import { PasswordInput } from '../../Basics/PasswordInput';
+import { Select } from '../../Basics/Select';
+import { OptionSelect } from '../../Basics/OptionSelect';
 import { ArrowButtom } from '../../Basics/ArrowButtom';
 import { Header } from '../../Header';
 import { useToast } from '../../../hooks/toast';
 
-import { Container } from './styles';
+import { Container, ErrorContainer, Error } from './styles';
 
 const { width } = Dimensions.get('window');
 
@@ -27,14 +31,17 @@ export function Form() {
   const formRef = useRef(null);
 
   const [loading, setLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [select, setSelect] = useState('');
+  const [error, setError] = useState(false);
 
   const { addToast } = useToast();
 
-  async function handleFirestoreUser({ name, email, phoneNumber, accessibility, password }) {
+  async function handleFirestoreUser({ name, email, phoneNumber, password }) { 
     auth()
     .createUserWithEmailAndPassword(email, password)
       .then(async (data) => { 
-       
+        
         firestore()
           .collection('users')
           .doc(data.user.uid)
@@ -42,7 +49,7 @@ export function Form() {
             name,
             email,
             phoneNumber,
-            accessibility,
+            accessibility: select.value,
             password,
             create_at: firestore.FieldValue.serverTimestamp()
           })
@@ -72,6 +79,16 @@ export function Form() {
     
     try {
       formRef.current.setErrors({});
+
+      if (!select) {
+        setError(true);
+
+        await schema.validate(data, { abortEarly: false });
+
+        return;
+      } else {
+        setError(false);
+      }
       
       await schema.validate(data, { abortEarly: false });
       
@@ -92,27 +109,42 @@ export function Form() {
     } 
   }
 
-  useFocusEffect(() => {
+  useFocusEffect(
+    useCallback (() => {
+      const acessibilityOptions = () => {
+        firestore()
+          .collection('accessibility')
+          .get()
+          .then((value) => {
+            const data = value.docs.map(doc => {
+              return {
+                ...doc.data(),
+              }
+            })
+            setOptions(data);
+          })
+      }
 
-    formRef.current.setData({
-      name: '',
-      email: '',
-      phoneNumber: '',
-      accessibility: '',
-      password: '',
-      passwordConfirm: '',
-    })
+      acessibilityOptions();
 
-  })
+      formRef.current.setData({
+        name: '',
+        email: '',
+        phoneNumber: '',
+        accessibility: '',
+        password: '',
+        passwordConfirm: '',
+      })
+    }, [])
+  );
 
   return (
     <Container>
-      {/* <KeyboardAvoidingView behavior="position" enabled> */}
         <View
           style={{
             position: 'absolute',
             top: -30,
-            left: width - 120,
+            left: width - 100,
           }}
         >
           <ArrowButtom
@@ -144,11 +176,27 @@ export function Form() {
             icon="phone"
             placeholder="Telefone para contato"
           />
-          <Input
-            name="accessibility"
-            icon="award"
-            placeholder="PRECISA SER UM SELECT"
+
+          <Select 
+            options={options}
+            icon="handshake-o"
+            placeholder="Defina a acessibilidade"
+            header='Selecione sua acessibilidade'
+            label="Usuario"
+            OptionComponent={OptionSelect}
+            onChange={setSelect}
           />
+          { error && (
+            <ErrorContainer>
+              <Feather 
+                name="alert-triangle"
+                size={24} 
+                color="#DC1637"
+              />
+                <Error> Selecione uma opção </Error>
+            </ErrorContainer>
+          )}
+         
           <PasswordInput
             name="password"
             icon="lock"
@@ -160,7 +208,6 @@ export function Form() {
             placeholder="Confirme a senha"
           />
         </Unform>
-      {/* </KeyboardAvoidingView> */}
     </Container>
   )
 }

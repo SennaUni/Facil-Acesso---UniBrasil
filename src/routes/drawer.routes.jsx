@@ -94,13 +94,13 @@ export function DrawerRoutes() {
                     drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />
                 }}
             /> 
-            {/* <Screen 
+            <Screen 
                 name='principal'
                 component={Principal}
                 options={{
                     drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />
                 }}
-            />  */}
+            /> 
         </Navigator>
     )
 }

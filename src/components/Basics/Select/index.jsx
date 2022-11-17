@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { TouchableOpacity, Modal, FlatList } from 'react-native';
 
-import { FontAwesome } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 
-import { Feather } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
 
 import { Header } from '../../../components/Header';
 
 import { Container, ComboBox, IconContainer, ModalContent, ModalHeader, ModalTitle, ModalSelect, SelectTitle } from './styles';
 
-export function Select({ icon, options, text, OptionComponent, onChange }) {
+export function Select({ icon, incialValue = null, options, placeholder, header, OptionComponent, onChange }) {
 
   const [openModal, setOpenModal] = useState(false);
-  const [selectedValue, setSelectedValue] = useState();
+  const [selectedValue, setSelectedValue] = useState(); 
 
   function renderOption(item) {
     return (
@@ -29,11 +29,19 @@ export function Select({ icon, options, text, OptionComponent, onChange }) {
     )
   }
 
+  useFocusEffect(
+    useCallback (() => {
+      const inicalSelectValue = options.find((item) => item.value === incialValue);
+        onChange(inicalSelectValue);
+        setSelectedValue(inicalSelectValue);
+    }, [options])
+  );
+
   return (
     <>
       <Container >
         <IconContainer>
-         <Feather
+         <FontAwesome
             name={icon}
             size={24}
             color={selectedValue ? '#6441A5' : '#AEAEB3'}
@@ -47,9 +55,9 @@ export function Select({ icon, options, text, OptionComponent, onChange }) {
             numberOfLines={1}
             color={selectedValue ? '#000' : '#AEAEB3'}
           >
-            {selectedValue?.name || text}
+            {selectedValue?.value || placeholder}
           </SelectTitle>
-          <FontAwesome
+          <FontAwesome5
             name='angle-down'
             size={26}
             color={selectedValue ? '#6441A5' : '#AEAEB3'}
@@ -74,7 +82,7 @@ export function Select({ icon, options, text, OptionComponent, onChange }) {
               </TouchableOpacity>
               <ModalTitle>
                 <Header 
-                  title='Selecione sua acessibilidade'
+                  title={header}
                   color='#FFF'
                 />
               </ModalTitle>

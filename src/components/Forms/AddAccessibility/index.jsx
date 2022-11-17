@@ -15,38 +15,30 @@ import { useToast } from '../../../hooks/toast';
 
 import { Container } from './styles';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-export function Form() {
+export function Form({ callBack, onSubmit }) {
   const formRef = useRef(null);
 
   const [loading, setLoading] = useState(false);
 
-  const { addToast } = useToast();
-
-  async function handleAccessibilityRegister(data) {
-    try {
-      formRef.current.setErrors({});
-
-      await schema.validate(data, { abortEarly: false });
-
-      console.log(data)
-    } catch (err) {
-      const validationErrors = {};
-      
-      if (err instanceof Yup.ValidationError) {
-        err.inner.forEach(error => {
-          validationErrors[error.path] = error.message;
-        });
-
-        formRef.current.setErrors(validationErrors);
-        console.log(validationErrors);
-      }
-    }
-  }
-
   return (
     <Container>
+            <View
+        style={{
+          position: 'absolute',
+          top: -30,
+          left: 50,
+        }}
+      >
+        <ArrowButtom
+          loading={loading}
+          reverse={true}
+          gradient={[ '#A88BEB', '#8241B8' ]}
+          onPress={() => callBack()}
+        />
+      </View>
+
       <View
         style={{
           position: 'absolute',
@@ -57,7 +49,7 @@ export function Form() {
         <ArrowButtom
           loading={loading}
           gradient={[ '#A88BEB', '#8241B8' ]}
-          onPress={() => formRef.current.submitForm()}
+          onPress={() => onSubmit()}
         />
       </View>
 
@@ -66,7 +58,6 @@ export function Form() {
       />
 
       <KeyboardAvoidingView behavior="position" enabled>
-        <Unform ref={formRef} onSubmit={handleAccessibilityRegister}>
           <Input
             name="category"
             icon="lock"
@@ -87,7 +78,6 @@ export function Form() {
             title="Cadastrar"
             onPress={() => formRef.current.submitForm()}
           />
-        </Unform>
       </KeyboardAvoidingView>
     </Container>
   )

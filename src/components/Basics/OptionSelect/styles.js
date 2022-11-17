@@ -1,6 +1,6 @@
-// import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
+import { FontAwesome } from '@expo/vector-icons';
 
 export const Container = styled.TouchableOpacity`
   flex-direction: row;
@@ -12,11 +12,13 @@ export const Container = styled.TouchableOpacity`
   background-color: ${props => props.backGround};
 `;
 
-export const Picture = styled.Image`
-  height: 50px;
-  width: 50px;
+export const Picture = styled(FontAwesome)`
+  height: 40px;
+  width: 40px;
   border-radius: 25px;
   margin-right: 12px;
+  justify-content: center;
+  text-align: center;
 `;
 
 export const Label = styled.Text`

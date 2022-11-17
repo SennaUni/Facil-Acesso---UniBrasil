@@ -18,7 +18,7 @@ import { Container } from './styles';
 
 const { height, width } = Dimensions.get('window');
 
-export function Form() {
+export function Form({ callBack }) {
   const formRef = useRef(null);
 
   const [loading, setLoading] = useState(false);
@@ -101,14 +101,14 @@ export function Form() {
         <ArrowButtom
           loading={loading}
           gradient={[ '#A88BEB', '#8241B8' ]}
-          onPress={() => formRef.current.submitForm()}
+          onPress={() => callBack()}
         />
         </View>
       <Header 
         title='Criar comentário'
       />
       <KeyboardAvoidingView behavior="position" enabled>
-        <Unform ref={formRef} onSubmit={handleCommentRegister}>
+        {/* <Unform ref={formRef} onSubmit={handleCommentRegister}> */}
           <Input
             name="name"
             icon="user"
@@ -136,7 +136,7 @@ export function Form() {
             icon="lock"
             placeholder="INSERIR IMAGEM"
           />
-        </Unform>
+        {/* </Unform> */}
       </KeyboardAvoidingView>
     </Container>
   )
