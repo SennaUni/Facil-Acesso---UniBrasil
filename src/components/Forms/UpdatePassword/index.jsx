@@ -19,7 +19,7 @@ import { useAuth } from '../../../hooks/auth';
 
 import { Container } from './styles';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export function Form() {
   const formRef = useRef(null)
@@ -27,7 +27,7 @@ export function Form() {
   const [loading, setLoading] = useState(false);
 
   const { addToast } = useToast();
-  const { dataAuth } = useAuth();
+  const { dataAuth, updateValues } = useAuth();
 
   async function handleFirebaseUpdatePassword({ oldPassword, newPassword }) {
     auth()
@@ -36,6 +36,10 @@ export function Form() {
         const user = auth().currentUser;
 
         user.updatePassword(newPassword);
+
+        updateValues({
+          password: newPassword,
+        })
           
         const success = {
           type: 'success', 

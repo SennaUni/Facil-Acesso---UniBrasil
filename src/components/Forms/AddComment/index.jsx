@@ -1,10 +1,12 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
 
-import { Form as Unform } from '@unform/mobile';
+import { useFocusEffect } from '@react-navigation/native';
 
 import firestore from '@react-native-firebase/firestore';
+
+import { Feather } from '@expo/vector-icons';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
@@ -12,43 +14,38 @@ import { schema } from './schema';
 import { Input } from '../../Basics/Input';
 import { ArrowButtom } from '../../Basics/ArrowButtom';
 import { Header } from '../../Header';
-import { useToast } from '../../../hooks/toast';
+import { Select } from '../../Basics/Select';
+import { OptionSelect } from '../../Basics/OptionSelect';
 
-import { Container } from './styles';
+import { Container, ErrorContainer, Error } from './styles';
 
-const { height, width } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-export function Form({ callBack }) {
-  const formRef = useRef(null);
+export function Form({ callBack, getSelect, formRef }) {
+  const [options, setOptions] = useState([]);
+  const [error, setError] = useState(false);
+  const [select, setSelect] = useState('');
 
-  const [loading, setLoading] = useState(false);
-
-  const { addToast } = useToast();
-
-  async function handleCommentRegister(data) {
+  async function handleChangeForm() {
     try {
+      const data = formRef.current.getData();
+
       formRef.current.setErrors({});
+
+      if (!select) {
+        setError(true);
+        await schema.validate(data, { abortEarly: false });
+        return;
+      } 
+        
+      setError(false);
 
       await schema.validate(data, { abortEarly: false });
 
-      console.log(data)
+      callBack();
+      getSelect(select);
 
-      const { address, comment, image, name, rating } = data;
-
-      firestore()
-        .collection('teste')
-        .add({
-          address,
-          comment,
-          image,
-          name,
-          rating,
-          create_at: firestore.FieldValue.serverTimestamp()
-        })
-        .then(() => Alert.alert('Sucesso'))
-        .catch((err) => console.log(err));
-
-    } catch (err) {
+    } catch (err) { 
       const validationErrors = {};
       
       if (err instanceof Yup.ValidationError) {
@@ -62,32 +59,21 @@ export function Form({ callBack }) {
     }
   }
 
-  useEffect(() => { 
-    const subscribe = firestore()
-      .collection('teste')
-      .onSnapshot(querySnapshot => {
-        const data = querySnapshot.docs.map(doc => {
-          // console.log(doc.id);
-          return {
-            id: doc.id,
-            ...doc.data(),
-          }
-        })
-
-        console.log(data);
-        // setar essa data em algum lugar
-      })
-    
-    return () => subscribe();
-
-    // async function teste() {
-    //   const users = await firestore().collection('teste').doc('jLiODWAy5y9imR1pPxma').get();
-    //   console.log(users.data());
-    // }
-
-    // teste();
-
-  }, []);
+  useFocusEffect(
+    useCallback (() => {
+      const rateOptions = () => {
+        firestore()
+          .collection('rate')
+          .get()
+          .then((value) => {
+            const data = value.docs.map(doc => doc.data())
+            setOptions(data);
+          })
+      }
+  
+      rateOptions();
+    }, [])
+  );
 
   return (
     <Container>
@@ -99,16 +85,15 @@ export function Form({ callBack }) {
         }}
       >
         <ArrowButtom
-          loading={loading}
+          // loading={loading}
           gradient={[ '#A88BEB', '#8241B8' ]}
-          onPress={() => callBack()}
+          onPress={() => handleChangeForm()}
         />
         </View>
       <Header 
         title='Criar comentário'
       />
       <KeyboardAvoidingView behavior="position" enabled>
-        {/* <Unform ref={formRef} onSubmit={handleCommentRegister}> */}
           <Input
             name="name"
             icon="user"
@@ -116,27 +101,37 @@ export function Form({ callBack }) {
           />
           <Input
             name="address"
-            icon="mail"
+            icon="map-pin"
             placeholder="Endereço"
           />
-          <Input
-            name="rating"
-            icon="lock"
-            placeholder="PRECISA SER UM SELECT"
+
+          <Select 
+            options={options}
+            icon="star"
+            placeholder="Defina sua satisfação"
+            header='Selecione sua satisfação'
+            label="Usuario"
+            OptionComponent={OptionSelect}
+            onChange={setSelect}
           />
+          { error && (
+            <ErrorContainer>
+              <Feather 
+                name="alert-triangle"
+                size={24} 
+                color="#DC1637"
+              />
+                <Error> Selecione uma opção </Error>
+            </ErrorContainer>
+          )}
+
           <Input
             name="comment"
-            icon="lock"
-            placeholder="VER SE EXISTE TEXT AREA"
+            icon="message-circle"
+            placeholder="Insira um comentário"
             multiline
-            // numberOfLines={4}
+            numberOfLines={4}
           />
-          <Input
-            name="image"
-            icon="lock"
-            placeholder="INSERIR IMAGEM"
-          />
-        {/* </Unform> */}
       </KeyboardAvoidingView>
     </Container>
   )

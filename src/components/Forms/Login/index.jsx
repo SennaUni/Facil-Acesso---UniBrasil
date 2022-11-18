@@ -31,7 +31,7 @@ const { width } = Dimensions.get('window');
 export function Form() {
   const formRef = useRef(null);
 
-  const navigate = useNavigation();
+  const { navigate } = useNavigation();
 
   const [loading, setLoading] = useState(false);
 
@@ -60,7 +60,7 @@ export function Form() {
 
       addToast(success); 
       
-      navigate.navigate('principal')
+      navigate('principal')
     })
     .catch((err) => { console.log(err)
       const error = {
@@ -148,7 +148,7 @@ export function Form() {
 
       <Options>
         <TouchableOpacity
-          onPress={() => navigate.navigate('forgotPassword')}
+          onPress={() => navigate('forgotPassword')}
         >
           <OptionsText color={'#6441A5'} >Esqueceu a senha?</OptionsText>  
         </TouchableOpacity>
@@ -171,7 +171,7 @@ export function Form() {
 
       <Options>
         <TouchableOpacity
-          onPress={() => navigate.navigate('register')} 
+          onPress={() => navigate('register')} 
         >
           <OptionsText color={'#6441A5'}>Novo usuário? Se cadastre</OptionsText>  
         </TouchableOpacity>

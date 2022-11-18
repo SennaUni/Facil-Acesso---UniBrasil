@@ -49,7 +49,10 @@ export function Input({ name, icon,...rest }) {
   return (
     <>
       <Container >
-        <IconContainer isFocused={isFocused}>
+        <IconContainer 
+          isFocused={isFocused}
+          {...rest}
+        >
           <Feather
             name={icon}
             size={24}

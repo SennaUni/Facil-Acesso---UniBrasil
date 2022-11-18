@@ -4,7 +4,7 @@ import { View, Dimensions } from 'react-native';
 
 import { Form as Unform } from '@unform/mobile';
 
-import { useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import auth from '@react-native-firebase/auth'
 
@@ -36,6 +36,7 @@ export function Form() {
   const [error, setError] = useState(false);
 
   const { addToast } = useToast();
+  const { navigate } = useNavigation();
 
   async function handleFirestoreUser({ name, email, phoneNumber, password }) { 
     auth()
@@ -61,7 +62,7 @@ export function Form() {
         }
         addToast(success);
 
-        // navigate.navigate('login');
+        navigate('login');
       })
       .catch(() => {
         const error = {

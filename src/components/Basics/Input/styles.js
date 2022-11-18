@@ -10,6 +10,7 @@ export const Container = styled.View`
 
 export const IconContainer = styled.View`
   height: 50px;
+  max-height: 200px;
   width: 55px;
   justify-content: center;
   align-items: center;
@@ -19,6 +20,10 @@ export const IconContainer = styled.View`
   
   ${({ isFocused }) => isFocused && css`
     border-bottom-width: 3px; 
+  `};
+
+  ${({ multiline }) => multiline && css`
+    height: 100%;
   `};
 `;
 

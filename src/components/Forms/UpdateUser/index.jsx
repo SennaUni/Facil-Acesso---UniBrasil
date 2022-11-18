@@ -36,9 +36,26 @@ export function Form() {
   const [error, setError] = useState(false);
 
   const { addToast } = useToast();
-  const { dataAuth } = useAuth();
+  const { dataAuth, updateValues } = useAuth();
 
-  async function handleFirebaseUpdateUser({ email, name, phoneNumber }) { 
+  async function handleFirebaseUpdateUser({ email, name, phoneNumber }) { console.log(email, name, phoneNumber)
+    const user = auth().currentUser;
+
+    auth()
+    .signInWithEmailAndPassword(dataAuth.email, dataAuth.password)
+    .then(async () => {
+      user.updateEmail(email);
+    })
+    .catch((err) => { console.log(err)
+      const error = {
+        type: 'error', 
+        title: 'Ocorreu um erro', 
+        description: 'Erro ao atualizar usuário',
+      }
+
+      addToast(error);
+    });
+
     firestore()
       .collection('users')
       .doc(dataAuth.uid)
@@ -48,11 +65,16 @@ export function Form() {
         phoneNumber,
         accessibility: select.value,
       })
-      .then(() => {
-        const user = auth().currentUser;
+      .then(() => { 
+        const dataUpdate = {
+          name,
+          email,
+          phoneNumber,
+          accessibility: select.value,
+        };
 
-        user.updateEmail(email);
-
+        updateValues(dataUpdate)
+        
         const success = {
           type: 'success', 
           title: 'Usuário atualizado com sucesso', 
@@ -61,7 +83,7 @@ export function Form() {
 
         addToast(success);
       })
-      .catch((err) => {
+      .catch((err) => { console.log(err)
         const error = {
           type: 'error', 
           title: 'Ocorreu um erro', 
@@ -69,8 +91,8 @@ export function Form() {
         }
 
         addToast(error);
-      })
-      .finally(() => setLoading(false));
+        })
+        .finally(() => setLoading(false));
   }
 
   async function handleUpdateUser(data) { 
@@ -120,8 +142,6 @@ export function Form() {
     }
 
     acessibilityOptions();
-
-    console.log('fora do select', dataAuth)
 
     formRef.current.setData({
       name: dataAuth.name,

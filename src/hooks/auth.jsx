@@ -36,15 +36,26 @@ const AuthProvider = ({ children }) => {
       phoneNumber,
     })
 
-  }, []);
+  }, [dataAuth]);
 
   const signOut = useCallback(() => {
     auth().signOut();
     setDataAuth([])
   }, []);
 
+  const updateValues = useCallback((data) => {
+    const object = {
+      ...dataAuth,
+      ...data,
+    }
+
+    setDataAuth(object);
+
+    signIn(object);
+  }, []);
+
   return (
-    <AuthContex.Provider value={{ dataAuth, signIn }}>
+    <AuthContex.Provider value={{ dataAuth, signIn, updateValues }}>
       {children}
     </AuthContex.Provider>
   )
