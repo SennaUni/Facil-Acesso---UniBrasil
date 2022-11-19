@@ -21,7 +21,7 @@ export function Principal() {
   const [access, setAccesss] = useState(null);
   const [commerce, setCommerce] = useState(null);
 
-  const teste = (access && commerce)
+  const dados = (access && commerce)
   ? commentsOptions.filter(item => item.data.access
                    .find(item2 => item2.acessibilidade === access.value))
                    .filter(valor => valor.data.commerce.value === commerce.value )
@@ -108,7 +108,7 @@ export function Principal() {
         </Comments>
         <CommentsCards>
           <DataTable
-            data={teste}
+            data={dados}
           />
         </CommentsCards>
       </Content>
