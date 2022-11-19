@@ -6,7 +6,7 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import firestore from '@react-native-firebase/firestore';
 
-import { Feather } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 
 import * as Yup from 'yup';
 import { schema } from './schema';
@@ -16,6 +16,7 @@ import { Input } from '../../Basics/Input';
 import { ArrowButtom } from '../../Basics/ArrowButtom';
 import { Select } from '../../Basics/Select';
 import { OptionSelect } from '../../Basics/OptionSelect';
+import { DataTable } from '../../DataTable/Accessibilities';
 import { Header } from '../../Header';
 
 import { useToast } from '../../../hooks/toast';
@@ -34,6 +35,8 @@ export function Form({ callBack, onSubmit, getAccess, formRef }) {
   const { addToast } = useToast();
   const { navigate } = useNavigation();
 
+  console.log(accessibilities)
+
   function onSubmitForm() {
     setLoading(true);
 
@@ -48,15 +51,13 @@ export function Form({ callBack, onSubmit, getAccess, formRef }) {
       return;
     } 
     getAccess(accessibilities);
-    
+
     setTimeout(() => {
       onSubmit();
       setLoading(false);
       navigate('principal');
     }, 1000);
   }
-
-  console.log(accessibilities)
 
   async function handleAddAccess() {
     try {
@@ -157,6 +158,8 @@ export function Form({ callBack, onSubmit, getAccess, formRef }) {
         title='Acessibilidades presentes'
       />
 
+      { accessibilities && <DataTable data={accessibilities} /> }
+
       <KeyboardAvoidingView behavior="position" enabled>
           <Select 
             options={options}
@@ -182,12 +185,15 @@ export function Form({ callBack, onSubmit, getAccess, formRef }) {
             name="accessibility"
             icon="pen-tool"
             placeholder="Descreva a accessibilidade"
+            multiline
+            numberOfLines={3}
           />
 
           <Buttom
             title="Cadastrar"
             onPress={() => handleAddAccess()}
           />
+
       </KeyboardAvoidingView>
     </Container>
   )

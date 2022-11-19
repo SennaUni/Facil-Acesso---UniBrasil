@@ -6,14 +6,13 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { Form as Unform } from '@unform/mobile';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import firestore from '@react-native-firebase/firestore';
 
 import { Form as FormComment } from '../AddComment';
 import { Form as FormAccessibility } from '../AddAccessibility';
 
 import { useToast } from '../../../hooks/toast';
+import { useAuth } from '../../../hooks/auth';
 
 import { Container, Content } from './styles';
 
@@ -23,22 +22,23 @@ export function Form() {
   const [loading, setLoading] = useState(false);
   const [pageForm, setPageForm] = useState(1);
   const [selectRate, setSelectRate] = useState({});
+  const [selectCommerce, setSelectCommerce] = useState({});
   const [access, setAccess] = useState([]);
 
   const { addToast } = useToast();
+  const { dataAuth } = useAuth();
 
-  console.log(access)
-
-  async function handleFirebaseAddComment({ address, comment, name }) {;
+  async function handleFirebaseAddComment({ address, comment, name }) {
     firestore()
       .collection('comments')
       .add({
-        id: uuidv4(),
         name,
         address,
         comment,
         rate: selectRate,
-        asccess: JSON.stringify(access),
+        commerce: selectCommerce,
+        access: access,
+        created_by: dataAuth.uid,
         create_at: firestore.FieldValue.serverTimestamp()
       })
       .then(() => {
@@ -61,7 +61,7 @@ export function Form() {
       .finally(() => setLoading(false));
   }
 
-  async function handleRegisteComment(data) {console.log('dentro', access)
+  async function handleRegisteComment(data) {
     try {
 
       await handleFirebaseAddComment(data);
@@ -98,7 +98,8 @@ export function Form() {
               callBack={() =>  setPageForm(2)}
               loading={loading}
               formRef={formRef}
-              getSelect={setSelectRate}
+              getSelectRate={setSelectRate}
+              getSelectCommerce={setSelectCommerce}
             />
           </Content>
           <View 

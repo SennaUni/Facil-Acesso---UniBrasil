@@ -4,8 +4,8 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import { ScreenA } from '../screens/screenA';
 import { ScreenB } from '../screens/screenB';
-import { Principal } from '../screens/principal';
 
+import { Principal } from '../screens/Principal';
 import { Register } from '../screens/Register';
 import { Login } from '../screens/Login';
 import { UpdateUser } from '../screens/UpdateUser'

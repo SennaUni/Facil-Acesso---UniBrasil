@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ScreenA } from '../screens/screenA';
 import { ScreenB } from '../screens/screenB';
-import { Principal } from '../screens/principal';
+import { Principal } from '../screens/Principal';
 
 const { Screen, Navigator, Group } = createNativeStackNavigator();
 

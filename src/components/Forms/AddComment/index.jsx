@@ -21,29 +21,51 @@ import { Container, ErrorContainer, Error } from './styles';
 
 const { width } = Dimensions.get('window');
 
-export function Form({ callBack, getSelect, formRef }) {
-  const [options, setOptions] = useState([]);
-  const [error, setError] = useState(false);
-  const [select, setSelect] = useState('');
+export function Form({ callBack, getSelectRate, getSelectCommerce, formRef }) {
+  const [optionsRate, setOptionsRate] = useState([]);
+  const [selectRate, setSelectRate] = useState('');
+  const [errorRate, setErrorRate] = useState(false);
+
+  const [optionsCommerce, setOptionsCommerce] = useState([]);
+  const [selectCommerce, setSelectCommerce] = useState('');
+  const [errorCommerce, setErrorCommerce] = useState(false);
 
   async function handleChangeForm() {
     try {
+      setErrorRate(false);
+      setErrorCommerce(false);
+      
       const data = formRef.current.getData();
 
       formRef.current.setErrors({});
 
-      if (!select) {
-        setError(true);
+      if (!selectRate && !selectCommerce) {
+        setErrorRate(true);
+        setErrorCommerce(true);
+        await schema.validate(data, { abortEarly: false });
+        return;
+      } 
+
+      if (!selectRate) {
+        setErrorRate(true);
+        await schema.validate(data, { abortEarly: false });
+        return;
+      } 
+
+      if (!selectCommerce) {
+        setErrorCommerce(true);
         await schema.validate(data, { abortEarly: false });
         return;
       } 
         
-      setError(false);
+      setErrorRate(false);
+      setErrorCommerce(false);
 
       await schema.validate(data, { abortEarly: false });
 
       callBack();
-      getSelect(select);
+      getSelectRate(selectRate);
+      getSelectCommerce(selectCommerce);
 
     } catch (err) { 
       const validationErrors = {};
@@ -67,11 +89,22 @@ export function Form({ callBack, getSelect, formRef }) {
           .get()
           .then((value) => {
             const data = value.docs.map(doc => doc.data())
-            setOptions(data);
+            setOptionsRate(data);
+          })
+      }
+
+      const commerceOptions = () => {
+        firestore()
+          .collection('commerce')
+          .get()
+          .then((value) => {
+            const data = value.docs.map(doc => doc.data())
+            setOptionsCommerce(data);
           })
       }
   
       rateOptions();
+      commerceOptions();
     }, [])
   );
 
@@ -106,15 +139,14 @@ export function Form({ callBack, getSelect, formRef }) {
           />
 
           <Select 
-            options={options}
+            options={optionsRate}
             icon="star"
             placeholder="Defina sua satisfação"
             header='Selecione sua satisfação'
-            label="Usuario"
             OptionComponent={OptionSelect}
-            onChange={setSelect}
+            onChange={setSelectRate}
           />
-          { error && (
+          { errorRate && (
             <ErrorContainer>
               <Feather 
                 name="alert-triangle"
@@ -124,6 +156,25 @@ export function Form({ callBack, getSelect, formRef }) {
                 <Error> Selecione uma opção </Error>
             </ErrorContainer>
           )}
+
+          <Select 
+            options={optionsCommerce}
+            icon="shopping-bag"
+            placeholder="Defina sua categoria"
+            header='Selecione sua categoria'
+            OptionComponent={OptionSelect}
+            onChange={setSelectCommerce}
+          />
+          { errorCommerce && (
+            <ErrorContainer>
+              <Feather 
+                name="alert-triangle"
+                size={24} 
+                color="#DC1637"
+              />
+                <Error> Selecione uma opção </Error>
+            </ErrorContainer>
+          )}    
 
           <Input
             name="comment"
