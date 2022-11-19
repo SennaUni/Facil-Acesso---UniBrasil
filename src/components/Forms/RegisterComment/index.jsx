@@ -78,11 +78,16 @@ export function Form() {
 
   useFocusEffect(
     useCallback (() => {
-      // formRef.current.setData({
-      //   name: dataAuth.name,
-      //   email: dataAuth.email,
-      //   phoneNumber: dataAuth.phoneNumber,
-      // })  
+      formRef.current.setErrors({});
+      
+      formRef.current.setData({
+        name: '',
+        address: '',
+        comment: '',
+        accessibility: '',
+      })  
+
+      setPageForm(1);
     }, [])
   );
 

@@ -4,9 +4,23 @@ import { View } from 'react-native';
 
 import { FontAwesome } from '@expo/vector-icons';
 
+import { Deatils } from '../Details';
+import { useAuth } from '../../hooks/auth';
+
 import { Container, Icon, Header, Content, Address, AddressText, Buttons, IconButton, ButtonDetails, DeatilsText } from './styles';
 
 export function Card({item}) {
+
+  const { dataAuth } = useAuth(); 
+
+  function addFavoritos() {
+    dataAuth.uid && console.log('curti o id: ' + item.id)
+  }
+
+  function addCurtidas() {
+    dataAuth.uid && console.log('favoritei o id: ' + item.id)
+  }
+
   return (
     <Container
       style={{
@@ -47,7 +61,7 @@ export function Card({item}) {
 
         <Buttons>
           <IconButton
-            onPress={() => console.log('curti o id: ' + item.id)}
+            onPress={addFavoritos}
           >
             <FontAwesome 
               name={'heart-o' || 'heart'} 
@@ -56,7 +70,7 @@ export function Card({item}) {
             />
           </IconButton>
           <IconButton
-            onPress={() => console.log('favoritei o id: ' + item.id)}
+            onPress={addCurtidas}
           >
           <FontAwesome 
               name={'star-o' || 'star'} 
@@ -66,11 +80,9 @@ export function Card({item}) {
           </IconButton>
         </Buttons>
       </Content>
-      <ButtonDetails>
-        <DeatilsText>
-          Mais detalhes
-        </DeatilsText>
-      </ButtonDetails>
+      <Deatils 
+        data={item.data}
+      />
     </Container>
   )
 }

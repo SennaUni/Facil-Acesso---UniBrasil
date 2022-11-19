@@ -14,9 +14,6 @@ export function DataTable({ data }) {
         renderItem={({item}) => <Card item={item}/>}
         keyExtractor={item => item.id}
         ListEmptyComponent={() => console.log('vazio')}
-        style={{
-          zIndex: 999
-        }}
       />
     </Container>
   )

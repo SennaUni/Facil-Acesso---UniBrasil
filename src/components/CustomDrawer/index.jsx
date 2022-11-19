@@ -2,13 +2,24 @@ import React from 'react';
 
 import { View, StyleSheet } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
+
 import { Container, Header, HeaderImage, HeaderText, DrawerOptions, Footer, FooterButtons, FooterText } from './styles';
 
 export function CustomDrawer( props ) {
+
+  const { dataAuth, signOut } = useAuth();
+  const { navigate } = useNavigation();
+  const { addToast } = useToast();
+  
+
   return (
      <Container colors={[ '#8241B8', '#6C33A3' ]}>
       <DrawerContentScrollView 
@@ -20,7 +31,9 @@ export function CustomDrawer( props ) {
             <HeaderImage
               
             />
-            <HeaderText>Senninha</HeaderText>
+            <HeaderText>
+              { dataAuth.name ? 'Olá, ' + dataAuth.name  : 'Bem vindo, Visitante'}
+            </HeaderText>
           </View>
         </Header>
         <DrawerOptions>
@@ -39,7 +52,20 @@ export function CustomDrawer( props ) {
           />
           <FooterText>Opções</FooterText>
         </FooterButtons>
-        <FooterButtons>
+        <FooterButtons
+          onPress={() => {
+            signOut();
+            
+            const success = {
+              type: 'success', 
+              title: 'LogOut com sucesso', 
+              description: 'Até a próxima',
+            }
+      
+            addToast(success); 
+            navigate('principal');
+          }}
+        >
           <MaterialIcons 
             name="logout" 
             size={22} 

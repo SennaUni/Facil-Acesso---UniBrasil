@@ -38,7 +38,7 @@ export function Form() {
   const { addToast } = useToast();
   const { dataAuth, updateValues } = useAuth();
 
-  async function handleFirebaseUpdateUser({ email, name, phoneNumber }) { console.log(email, name, phoneNumber)
+  async function handleFirebaseUpdateUser({ email, name, phoneNumber }) {
     const user = auth().currentUser;
 
     auth()

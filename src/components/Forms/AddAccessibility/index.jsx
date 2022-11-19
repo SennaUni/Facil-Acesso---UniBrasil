@@ -35,8 +35,6 @@ export function Form({ callBack, onSubmit, getAccess, formRef }) {
   const { addToast } = useToast();
   const { navigate } = useNavigation();
 
-  console.log(accessibilities)
-
   function onSubmitForm() {
     setLoading(true);
 
@@ -109,6 +107,8 @@ export function Form({ callBack, onSubmit, getAccess, formRef }) {
 
   useFocusEffect(
     useCallback (() => {
+      setError(false);
+
       const AccessOptions = () => {
         firestore()
           .collection('accessibility')

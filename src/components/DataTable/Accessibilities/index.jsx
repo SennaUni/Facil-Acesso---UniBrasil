@@ -8,7 +8,9 @@ export function DataTable({ data }) {
   return (
     <Container>
       { data.map((item, index) => (
-          <Content>
+          <Content
+            key={index}
+          >
             <Icon
                colors={[ '#A88BEB', '#8241B8' ]}
             >

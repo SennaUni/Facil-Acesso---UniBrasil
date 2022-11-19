@@ -10,6 +10,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import { DataTable as FilterOptions } from '../../components/DataTable/FilterOptions';
 import { DataTable } from '../../components/DataTable/Comments';
+import { useAuth } from '../../hooks/auth';
 
 import { Container, Content, Comments, CommentsText, Icon, CommentsCards } from './styles';
 
@@ -21,21 +22,29 @@ export function Principal() {
   const [access, setAccesss] = useState(null);
   const [commerce, setCommerce] = useState(null);
 
+  const { dataAuth } = useAuth(); 
+
   const dados = (access && commerce)
-  ? commentsOptions.filter(item => item.data.access
-                   .find(item2 => item2.acessibilidade === access.value))
-                   .filter(valor => valor.data.commerce.value === commerce.value )
-  : access 
     ? commentsOptions.filter(item => item.data.access
                      .find(item2 => item2.acessibilidade === access.value))
-    : commerce
-      ? commentsOptions.filter(item => item.data.commerce.value === commerce.value)
-      : commentsOptions;
+                     .filter(valor => valor.data.commerce.value === commerce.value )
+      : access
+      ? commentsOptions.filter(item => item.data.access
+                       .find(item2 => item2.acessibilidade === access.value))
+        : commerce
+          ? commentsOptions.filter(item => item.data.commerce.value === commerce.value)
+          : dataAuth.accessibility 
+            ? commentsOptions.filter(item => item.data.access
+                             .find(item2 => item2.acessibilidade === dataAuth.accessibility))
+              : commentsOptions;
 
   const { navigate } = useNavigation();
 
   useFocusEffect( 
     useCallback (() => {
+      setAccesss(null);
+      setCommerce(null);
+
       const AccessOptions = () => {
         firestore()
           .collection('accessibility')
@@ -94,17 +103,19 @@ export function Principal() {
         />
         <Comments>
           <CommentsText>Comentarios</CommentsText>
-          <TouchableOpacity
-            onPress={() => navigate('registerComment')}
-          >
-            <Icon colors={[ '#A88BEB', '#8241B8' ]}>
-              <FontAwesome
-                name='plus'
-                size={30}
-                color='#FFF'
-              />
-            </Icon>
-          </TouchableOpacity>
+          {dataAuth.uid && 
+            <TouchableOpacity
+              onPress={() => navigate('registerComment')}
+            >
+              <Icon colors={[ '#A88BEB', '#8241B8' ]}>
+                <FontAwesome
+                  name='plus'
+                  size={30}
+                  color='#FFF'
+                />
+              </Icon>
+            </TouchableOpacity>
+          }
         </Comments>
         <CommentsCards>
           <DataTable

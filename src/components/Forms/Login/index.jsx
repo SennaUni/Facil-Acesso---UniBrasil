@@ -31,10 +31,9 @@ const { width } = Dimensions.get('window');
 export function Form() {
   const formRef = useRef(null);
 
-  const { navigate } = useNavigation();
-
   const [loading, setLoading] = useState(false);
-
+  
+  const { navigate } = useNavigation();
   const { addToast } = useToast();
   const { signIn } = useAuth();
 

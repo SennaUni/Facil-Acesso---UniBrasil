@@ -7,7 +7,6 @@ import firestore from '@react-native-firebase/firestore';
 const AuthContex = createContext({});
 
 const AuthProvider = ({ children }) => {
-
   const [dataAuth, setDataAuth] = useState({
     email: '',
     password: '',
@@ -22,8 +21,6 @@ const AuthProvider = ({ children }) => {
         .collection('users')
         .doc(uid)
         .get();
-
-        console.log(userToEdit)
 
     const { accessibility, name, phoneNumber } = userToEdit.data();
   
@@ -55,7 +52,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContex.Provider value={{ dataAuth, signIn, updateValues }}>
+    <AuthContex.Provider value={{ dataAuth, signIn, signOut, updateValues }}>
       {children}
     </AuthContex.Provider>
   )

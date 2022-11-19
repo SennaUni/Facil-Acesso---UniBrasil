@@ -83,6 +83,9 @@ export function Form({ callBack, getSelectRate, getSelectCommerce, formRef }) {
 
   useFocusEffect(
     useCallback (() => {
+      setErrorRate(false);
+      setErrorCommerce(false);
+
       const rateOptions = () => {
         firestore()
           .collection('rate')
