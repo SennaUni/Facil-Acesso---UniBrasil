@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback, Text } from 'react-native';
 
 import { Header } from '../../components/Header';
-import { Form } from '../../components/Forms/AddAccessibility';
 
 import { Container, Content,FormView, HeaderTitle } from './styles';
 
-export function RegisterAccessibility() {
-  const [pageForm, setPageForm] = useState(1);
+export function Perfil() {
 
   return (
     <Container>
@@ -22,7 +20,8 @@ export function RegisterAccessibility() {
         </HeaderTitle>
         <FormView>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <Form />
+            {/* <Form /> */}
+            <Text>Meu perfil</Text>
           </TouchableWithoutFeedback>
         </FormView>
       </Content>

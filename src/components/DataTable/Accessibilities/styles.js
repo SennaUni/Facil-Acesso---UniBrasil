@@ -28,5 +28,6 @@ export const Text = styled.Text`
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 10px;
+  text-align: center;
   max-width: 100px;
 ` 

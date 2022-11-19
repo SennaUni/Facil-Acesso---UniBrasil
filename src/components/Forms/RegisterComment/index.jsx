@@ -38,6 +38,7 @@ export function Form() {
         rate: selectRate,
         commerce: selectCommerce,
         access: access,
+        liked_by: '',
         created_by: dataAuth.uid,
         create_at: firestore.FieldValue.serverTimestamp()
       })

@@ -1,20 +1,17 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react'
 
-import { TouchableOpacity } from 'react-native';
-
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import firestore from '@react-native-firebase/firestore';
 
-import { FontAwesome } from '@expo/vector-icons';
 
 import { DataTable as FilterOptions } from '../../components/DataTable/FilterOptions';
 import { DataTable } from '../../components/DataTable/Comments';
 import { useAuth } from '../../hooks/auth';
 
-import { Container, Content, Comments, CommentsText, Icon, CommentsCards } from './styles';
+import { Container, Content, Comments, CommentsText, CommentsCards } from './styles';
 
-export function Principal() {
+export function MyComments() {
   const [loading, setLoading] = useState(false);
   const [accessOptions, setAccessOptions] = useState([]);
   const [commerceOptions, setCommerceOptions] = useState([]);
@@ -33,12 +30,7 @@ export function Principal() {
                        .find(item2 => item2.acessibilidade === access.value))
         : commerce
           ? commentsOptions.filter(item => item.data.commerce.value === commerce.value)
-          : dataAuth.accessibility 
-            ? commentsOptions.filter(item => item.data.access
-                             .find(item2 => item2.acessibilidade === dataAuth.accessibility))
-              : commentsOptions;
-
-  const { navigate } = useNavigation();
+          : commentsOptions;
 
   useFocusEffect( 
     useCallback (() => {
@@ -68,6 +60,7 @@ export function Principal() {
       const Subscriber = () => {
         firestore()
           .collection('comments')
+          .where('created_by', '==', dataAuth.uid)
           .onSnapshot(querySnapshot => {
             const data = querySnapshot.docs.map(doc => {
               return {
@@ -103,19 +96,6 @@ export function Principal() {
         />
         <Comments>
           <CommentsText>Comentarios</CommentsText>
-          {dataAuth.uid && 
-            <TouchableOpacity
-              onPress={() => navigate('registerComment')}
-            >
-              <Icon colors={[ '#A88BEB', '#8241B8' ]}>
-                <FontAwesome
-                  name='plus'
-                  size={30}
-                  color='#FFF'
-                />
-              </Icon>
-            </TouchableOpacity>
-          }
         </Comments>
         <CommentsCards>
           <DataTable

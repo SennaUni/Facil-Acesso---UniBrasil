@@ -5,10 +5,12 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Principal } from '../screens/Principal';
 import { Register } from '../screens/Register';
 import { Login } from '../screens/Login';
+import { Perfil } from '../screens/Perfil';
 import { UpdateUser } from '../screens/UpdateUser'
 import { UpdatePassword } from '../screens/UpdatePassword'
 import { ForgotPassword } from '../screens/ForgotPassword'
 import { RegisterComment } from '../screens/RegisterComment'
+import { MyComments } from '../screens/MyComments'
 
 import { CustomDrawer } from '../components/CustomDrawer';
 
@@ -42,6 +44,14 @@ export function DrawerRoutes() {
                         }}
                     /> 
                     <Screen 
+                        name='perfil' 
+                        component={Perfil} 
+                        options={{
+                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            title: 'Meu perfil'
+                        }}
+                    />
+                    <Screen 
                         name='updateUser' 
                         component={UpdateUser} 
                         options={{
@@ -71,6 +81,14 @@ export function DrawerRoutes() {
                         options={{
                             drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
                             title: 'Realizar comentário'
+                        }}
+                    />
+                    <Screen 
+                        name='myComments' 
+                        component={MyComments} 
+                        options={{
+                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            title: 'Meus comentários'
                         }}
                     />
                 </>

@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export const Container = styled.View`
   width: 85%;
-  padding: 10px;
+  padding: 10px 10px 5px;
   border-radius: 25px;
   align-self: center;
   margin: 20px 0;
@@ -52,7 +52,7 @@ export const Buttons = styled.View`
 `
 
 export const IconButton = styled.TouchableOpacity`
-  padding: 5px;
+  padding: 10px;
 `
 
 export const ButtonDetails = styled.TouchableOpacity`

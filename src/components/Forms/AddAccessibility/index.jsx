@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 
 import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
 
@@ -104,6 +104,16 @@ export function Form({ callBack, onSubmit, getAccess, formRef }) {
       }
     }
   }
+
+  useEffect(() => {
+    setError(false);
+
+      formRef.current.setErrors({});
+      
+      formRef.current.setData({
+        accessibility: '',
+      })  
+  }, [accessibilities])
 
   useFocusEffect(
     useCallback (() => {
