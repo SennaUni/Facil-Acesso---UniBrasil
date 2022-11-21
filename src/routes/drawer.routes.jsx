@@ -5,12 +5,13 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Principal } from '../screens/Principal';
 import { Register } from '../screens/Register';
 import { Login } from '../screens/Login';
-import { Perfil } from '../screens/Perfil';
+import { Profile } from '../screens/Profile';
 import { UpdateUser } from '../screens/UpdateUser'
 import { UpdatePassword } from '../screens/UpdatePassword'
 import { ForgotPassword } from '../screens/ForgotPassword'
 import { RegisterComment } from '../screens/RegisterComment'
 import { MyComments } from '../screens/MyComments'
+import { MyFavorites } from '../screens/MyFavorites'
 
 import { CustomDrawer } from '../components/CustomDrawer';
 
@@ -39,15 +40,15 @@ export function DrawerRoutes() {
                         name='principal'
                         component={Principal}
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="home" size={22} color={color} />,
                             title: 'Home'
                         }}
                     /> 
                     <Screen 
                         name='perfil' 
-                        component={Perfil} 
+                        component={Profile} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="user" size={22} color={color} />,
                             title: 'Meu perfil'
                         }}
                     />
@@ -55,7 +56,7 @@ export function DrawerRoutes() {
                         name='updateUser' 
                         component={UpdateUser} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="edit" size={22} color={color} />,
                             title: 'Atualizar perfil'
                         }}
                     />
@@ -63,7 +64,7 @@ export function DrawerRoutes() {
                         name='updatePassword' 
                         component={UpdatePassword} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="unlock" size={22} color={color} />,
                             title: 'Alterar senha'
                         }}
                     />
@@ -71,7 +72,7 @@ export function DrawerRoutes() {
                         name='forgotPassword' 
                         component={ForgotPassword} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="envelope" size={22} color={color} />,
                             title: 'Esqueci minha senha'
                         }}
                     />
@@ -79,7 +80,7 @@ export function DrawerRoutes() {
                         name='registerComment' 
                         component={RegisterComment} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="plus" size={22} color={color} />,
                             title: 'Realizar comentário'
                         }}
                     />
@@ -87,8 +88,16 @@ export function DrawerRoutes() {
                         name='myComments' 
                         component={MyComments} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="file-text" size={22} color={color} />,
                             title: 'Meus comentários'
+                        }}
+                    />
+                    <Screen 
+                        name='myFavorites' 
+                        component={MyFavorites} 
+                        options={{
+                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            title: 'Comentários favoritos'
                         }}
                     />
                 </>
@@ -98,7 +107,7 @@ export function DrawerRoutes() {
                         name='principal'
                         component={Principal}
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="home" size={22} color={color} />,
                             title: 'Home'
                         }}
                     /> 
@@ -106,7 +115,7 @@ export function DrawerRoutes() {
                         name='register'
                         component={Register} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="user-plus" size={22} color={color} />,
                             title: 'Crie sua conta'
                         }}
                     />
@@ -114,7 +123,7 @@ export function DrawerRoutes() {
                         name='login' 
                         component={Login} 
                         options={{
-                            drawerIcon: ({ color }) => <FontAwesome name="heart" size={22} color={color} />,
+                            drawerIcon: ({ color }) => <FontAwesome name="sign-in" size={22} color={color} />,
                             title: 'Acesse sua conta'
                         }}
                     />

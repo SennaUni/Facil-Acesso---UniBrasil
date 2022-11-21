@@ -15,7 +15,6 @@ import { useAuth } from '../../hooks/auth';
 import { Container, Content, Comments, CommentsText, Icon, CommentsCards } from './styles';
 
 export function Principal() {
-  const [loading, setLoading] = useState(false);
   const [accessOptions, setAccessOptions] = useState([]);
   const [commerceOptions, setCommerceOptions] = useState([]);
   const [commentsOptions, setCommentsOptions] = useState([]);
@@ -23,6 +22,7 @@ export function Principal() {
   const [commerce, setCommerce] = useState(null);
 
   const { dataAuth } = useAuth(); 
+  const { navigate } = useNavigation();
 
   const dados = (access && commerce)
     ? commentsOptions.filter(item => item.data.access
@@ -37,8 +37,6 @@ export function Principal() {
             ? commentsOptions.filter(item => item.data.access
                              .find(item2 => item2.acessibilidade === dataAuth.accessibility))
               : commentsOptions;
-
-  const { navigate } = useNavigation();
 
   useFocusEffect( 
     useCallback (() => {

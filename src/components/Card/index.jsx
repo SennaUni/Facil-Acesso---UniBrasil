@@ -10,7 +10,7 @@ import { Deatils } from '../Details';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
-import { Container, Icon, Header, Content, Address, AddressText, Buttons, IconButton, ButtonDetails, DeatilsText } from './styles';
+import { Container, Icon, Header, Content, Address, AddressText, Buttons, IconButton } from './styles';
 
 export function Card({item}) {
 
@@ -68,7 +68,7 @@ export function Card({item}) {
         shadowOpacity: 0.3,
         shadowOffset: { width: 0, height: 0},
         shadowRadius: 3,
-        elevation: 15,
+        elevation: 5,
       }}
     >
       <View 

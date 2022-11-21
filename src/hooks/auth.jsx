@@ -45,10 +45,13 @@ const AuthProvider = ({ children }) => {
       ...dataAuth,
       ...data,
     }
+    
+    // console.log('senha atual => ', dataAuth.password)
+    // console.log('data => ', data)
+    // console.log('dataAuth => ', dataAuth)
+    // console.log('object => ', object)
 
     setDataAuth(object);
-
-    signIn(object);
   }, []);
 
   return (

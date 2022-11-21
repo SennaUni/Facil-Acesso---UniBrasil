@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 
 import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
 
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { Form as Unform } from '@unform/mobile';
 
@@ -27,6 +27,7 @@ export function Form() {
   const [loading, setLoading] = useState(false);
 
   const { addToast } = useToast();
+  const { navigate } = useNavigation();
   const { dataAuth, updateValues } = useAuth();
 
   async function handleFirebaseUpdatePassword({ oldPassword, newPassword }) {
@@ -48,6 +49,10 @@ export function Form() {
         }
 
         addToast(success);
+
+        setTimeout(() => {
+          navigate('perfil');
+        }, 500);
       })
       .catch((err) => {
         const error = {
@@ -62,6 +67,8 @@ export function Form() {
   }
 
   async function handleUpdatePassword(data) {
+    setLoading(true);
+
     try {
       formRef.current.setErrors({});
 
@@ -80,16 +87,20 @@ export function Form() {
         formRef.current.setErrors(validationErrors);
         console.log(validationErrors);
       }
-    }
+
+      setLoading(false)
+    } 
   }
 
-  useFocusEffect(() => { 
-    formRef.current.setData({
-      oldPassword: '',
-      newPassword: '',
-      newPasswordConfirm: '',
-    })
-  });
+  useFocusEffect(
+    useCallback (() => {
+      formRef.current.setData({
+        oldPassword: '',
+        newPassword: '',
+        newPasswordConfirm: '',
+      })
+    }, [])
+  );
 
   return (
     <Container>

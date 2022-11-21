@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   flex: 1;
 `;
 
@@ -37,7 +37,6 @@ export const Icon = styled(LinearGradient)`
 export const CommentsCards = styled.View`
   flex: 1;
   background-color: #F0F0F0;
-  padding: 20px 0;
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
 `

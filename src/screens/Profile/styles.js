@@ -16,7 +16,6 @@ export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-export const FormView = styled.View`
+export const DataView = styled.View`
   justify-content: flex-end;
-  flex: 2;
 `

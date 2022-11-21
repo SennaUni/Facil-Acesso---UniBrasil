@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 
 import { KeyboardAvoidingView, View, Dimensions } from 'react-native';
 
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { Form as Unform } from '@unform/mobile';
 
@@ -36,6 +36,7 @@ export function Form() {
   const [error, setError] = useState(false);
 
   const { addToast } = useToast();
+  const { navigate } = useNavigation();
   const { dataAuth, updateValues } = useAuth();
 
   async function handleFirebaseUpdateUser({ email, name, phoneNumber }) {
@@ -96,6 +97,8 @@ export function Form() {
   }
 
   async function handleUpdateUser(data) { 
+    setLoading(true);
+
     try {
       formRef.current.setErrors({});
 
@@ -113,6 +116,10 @@ export function Form() {
 
       await handleFirebaseUpdateUser(data);
 
+      setTimeout(() => {
+        navigate('perfil');
+      }, 700);
+
     } catch (err) {
       const validationErrors = {};
       
@@ -123,32 +130,36 @@ export function Form() {
 
         formRef.current.setErrors(validationErrors);
       }
+
+      setLoading(false)
     }
   }
 
-  useFocusEffect(useCallback (() => {
-    const acessibilityOptions = () => {
-      firestore()
-        .collection('accessibility')
-        .get()
-        .then((value) => {
-          const data = value.docs.map(doc => {
-            return {
-              ...doc.data(),
-            }
+  useFocusEffect(
+    useCallback (() => {
+      const acessibilityOptions = () => {
+        firestore()
+          .collection('accessibility')
+          .get()
+          .then((value) => {
+            const data = value.docs.map(doc => {
+              return {
+                ...doc.data(),
+              }
+            })
+            setOptions(data);
           })
-          setOptions(data);
-        })
-    }
+      }
 
-    acessibilityOptions();
+      acessibilityOptions();
 
-    formRef.current.setData({
-      name: dataAuth.name,
-      email: dataAuth.email,
-      phoneNumber: dataAuth.phoneNumber,
-    })  
-  }, [dataAuth]));
+      formRef.current.setData({
+        name: dataAuth.name,
+        email: dataAuth.email,
+        phoneNumber: dataAuth.phoneNumber,
+      })  
+    }, [dataAuth])
+  );
 
   return (
     <Container>

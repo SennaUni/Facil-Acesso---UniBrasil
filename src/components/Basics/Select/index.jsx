@@ -92,6 +92,7 @@ export function Select({ icon, incialValue = null, options, placeholder, header,
                 data={options ?? []}
                 keyExtractor={item => String(item.id)}
                 renderItem={({ item }) => renderOption(item) }
+                ListEmptyComponent={() => console.log('vazio')}
               />
             </ModalSelect>
           </ModalContent>

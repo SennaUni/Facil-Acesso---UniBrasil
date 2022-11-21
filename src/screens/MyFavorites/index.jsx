@@ -10,7 +10,7 @@ import { useAuth } from '../../hooks/auth';
 
 import { Container, Content, Comments, CommentsText, CommentsCards } from './styles';
 
-export function MyComments() {
+export function MyFavorites() {
   const [loading, setLoading] = useState(false);
   const [accessOptions, setAccessOptions] = useState([]);
   const [commerceOptions, setCommerceOptions] = useState([]);
@@ -59,9 +59,8 @@ export function MyComments() {
       const Subscriber = () => {
         firestore()
           .collection('comments')
-          // .orderBy('created_at', 'desc')
-          .where('created_by', '==', dataAuth.uid)
-          .onSnapshot(querySnapshot => { 
+          .where('liked_by', 'array-contains', dataAuth.uid)
+          .onSnapshot(querySnapshot => {
             const data = querySnapshot.docs.map(doc => {
               return {
                 id: doc.id,
@@ -95,14 +94,12 @@ export function MyComments() {
           callBack={setCommerce}
         />
         <Comments>
-          <CommentsText>Meus Comentarios</CommentsText>
+          <CommentsText>Comentarios Favoritos</CommentsText>
         </Comments>
         <CommentsCards>
-          { dados.length !== 0 && (
-            <DataTable
-              data={dados}
-            /> 
-          )}
+          <DataTable
+            data={dados}
+          />
         </CommentsCards>
       </Content>
     </Container>

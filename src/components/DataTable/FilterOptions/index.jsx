@@ -8,7 +8,7 @@ import { Container, Header, Content, Icon, Label } from './styles';
 
 export function DataTable({ data, header, callBack, color = '#FFF' }) {
 
-  function loopTest({ item }) {
+  function loop({ item }) {
     return(
       <Content>
         <TouchableOpacity
@@ -42,10 +42,11 @@ export function DataTable({ data, header, callBack, color = '#FFF' }) {
       </Header>
       <FlatList 
           data={data}
-          renderItem={loopTest}
+          renderItem={loop}
           keyExtractor={item => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
+          ListEmptyComponent={() => console.log('vazio')}
           style={{ paddingHorizontal: 5 }}
         />
     </Container>

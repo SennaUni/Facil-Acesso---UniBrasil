@@ -7,7 +7,7 @@ export const Container = styled.View`
   padding: 10px 10px 5px;
   border-radius: 25px;
   align-self: center;
-  margin: 20px 0;
+  margin: 40px 0 5px;
   background-color: #FFF;
 `;
 
@@ -53,18 +53,4 @@ export const Buttons = styled.View`
 
 export const IconButton = styled.TouchableOpacity`
   padding: 10px;
-`
-
-export const ButtonDetails = styled.TouchableOpacity`
-  align-items: center;
-  background-color: #8241B8;
-  border-radius: 15px;
-  padding: 10px;
-`
-
-export const DeatilsText = styled.Text`
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
 `
