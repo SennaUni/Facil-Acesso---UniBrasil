@@ -23,7 +23,8 @@ export function DataTable({ data }) {
         renderItem={({item}) => <Card item={item}/>}
         keyExtractor={item => item.id}
         ListEmptyComponent={() => Empty()}
-      />
+        showsVerticalScrollIndicator={false}
+        />
     </Container>
   )
 }
