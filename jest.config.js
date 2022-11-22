@@ -8,12 +8,12 @@ module.exports = {
     transform: {
         '\\.[jt]sx?$': 'babel-jest',
     },
-    collectCoverage: true,
-    collectCoverageFrom: [
-      "*/__tests__/*",
-      "!*/coverage/*",
-      "!*/node_modules/*",
-      "!**/babel.config.js",
-      "!**/jest.config.js"
-    ]
+    // collectCoverage: true,
+    // collectCoverageFrom: [
+    //   "*/__tests__/*",
+    //   "!*/coverage/*",
+    //   "!*/node_modules/*",
+    //   "!**/babel.config.js",
+    //   "!**/jest.config.js"
+    // ]
 };

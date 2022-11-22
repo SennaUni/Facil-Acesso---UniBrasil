@@ -1,0 +1,197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly loading false 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "borderRadius": 50,
+      "height": 60,
+      "opacity": 1,
+      "overflow": "hidden",
+      "width": 60,
+    }
+  }
+>
+  <BVLinearGradient
+    colors={
+      [
+        4289235947,
+        4286726584,
+      ]
+    }
+    endPoint={
+      {
+        "x": 0.5,
+        "y": 1,
+      }
+    }
+    loading={false}
+    locations={null}
+    startPoint={
+      {
+        "x": 0.5,
+        "y": 0,
+      }
+    }
+    style={
+      [
+        {
+          "alignItems": "center",
+          "height": "100%",
+          "justifyContent": "center",
+          "opacity": 1,
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <Text />
+  </BVLinearGradient>
+</View>
+`;
+
+exports[`render correctly loading true 1`] = `
+<View
+  accessibilityState={
+    {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "borderRadius": 50,
+      "height": 60,
+      "opacity": 1,
+      "overflow": "hidden",
+      "width": 60,
+    }
+  }
+>
+  <BVLinearGradient
+    colors={
+      [
+        4289235947,
+        4286726584,
+      ]
+    }
+    endPoint={
+      {
+        "x": 0.5,
+        "y": 1,
+      }
+    }
+    loading={true}
+    locations={null}
+    startPoint={
+      {
+        "x": 0.5,
+        "y": 0,
+      }
+    }
+    style={
+      [
+        {
+          "alignItems": "center",
+          "height": "100%",
+          "justifyContent": "center",
+          "opacity": 0.7,
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <ActivityIndicator
+      color="#FFF"
+      size="small"
+    />
+  </BVLinearGradient>
+</View>
+`;
+
+exports[`render correctly loading true and reverse 1`] = `
+<View
+  accessibilityState={
+    {
+      "disabled": true,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "borderRadius": 50,
+      "height": 60,
+      "opacity": 1,
+      "overflow": "hidden",
+      "width": 60,
+    }
+  }
+>
+  <BVLinearGradient
+    colors={
+      [
+        4289235947,
+        4286726584,
+      ]
+    }
+    endPoint={
+      {
+        "x": 0.5,
+        "y": 1,
+      }
+    }
+    loading={true}
+    locations={null}
+    startPoint={
+      {
+        "x": 0.5,
+        "y": 0,
+      }
+    }
+    style={
+      [
+        {
+          "alignItems": "center",
+          "height": "100%",
+          "justifyContent": "center",
+          "opacity": 0.7,
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <ActivityIndicator
+      color="#FFF"
+      size="small"
+    />
+  </BVLinearGradient>
+</View>
+`;

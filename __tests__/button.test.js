@@ -1,34 +1,30 @@
 import React from 'react';
 
-import renderer from 'react-test-renderer';
+import { create, act } from 'react-test-renderer';
 
 import { Buttom } from '../src/components/Basics/Buttom';
 
-describe('<Buttom />', () => {
+describe('render correctly', () => {
 
-  it('has 1 child', () => {
-    const tree = renderer
-      .create(
-        <Buttom 
-          title='TESTE'
-          loading={true}
-        />
-      ).toJSON();
+  it('loading false', () => {
+    const tree = create(
+      <Buttom 
+        title='TESTE'
+        loading={true}
+      />
+    ).toJSON();
 
-    expect(tree.children.length).toBe(1);
-    // expect(tree).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
   });
 
-  it('has 1 child', () => {
-    const tree = renderer
-      .create(
-        <Buttom 
-          title='TESTE'
-          loading={false}
-        />
-      ).toJSON();
+  it('loading true', () => {
+    const tree = create(
+      <Buttom 
+        title='TESTE'
+        loading={false}
+      />
+    ).toJSON();
 
-    expect(tree.children.length).toBe(1);
-    // expect(tree).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
   });
 });
