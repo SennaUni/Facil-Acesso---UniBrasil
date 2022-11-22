@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, Text, View } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 import { Header } from '../../components/Header';
 import { Form } from '../../components/Forms/Login';
@@ -18,11 +18,9 @@ export function Login() {
           />
         </HeaderTitle>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          {/* <KeyboardAvoidingView behavior="position" enabled> */}
             <FormView>
               <Form />
             </FormView>
-          {/* </KeyboardAvoidingView> */}
         </TouchableWithoutFeedback>
       </Content>
     </Container>

@@ -1,30 +1,28 @@
-import React from 'react';
-
-import { create, act } from 'react-test-renderer';
-
+import { render, screen, fireEvent } from '@testing-library/react-native';
 import { Buttom } from '../src/components/Basics/Buttom';
 
-describe('render correctly', () => {
+test('Testando conteudo para botão com parametro loading TRUE', async () => {
+  const { getByText, toJSON } = render(
+    <Buttom 
+      title='Teste' 
+      loading={true}
+    />
+  );
 
-  it('loading false', () => {
-    const tree = create(
-      <Buttom 
-        title='TESTE'
-        loading={true}
-      />
-    ).toJSON();
+  // expect(getByText('Jabuticaba')).toBeFalsy();
+  expect(getByText('Loading')).toBeTruthy();
+  expect(toJSON()).toMatchSnapshot();
+});
 
-    expect(tree).toMatchSnapshot();
-  });
+test('Testando conteudo para botão com parametro loading FALSE', async () => {
+  const { getByText, toJSON } = render(
+    <Buttom 
+      title='Jabuticaba' 
+      loading={false}
+    />
+  );
 
-  it('loading true', () => {
-    const tree = create(
-      <Buttom 
-        title='TESTE'
-        loading={false}
-      />
-    ).toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
+  // expect(getByText('Loading')).toBeFalsy();
+  expect(getByText('Jabuticaba')).toBeTruthy();
+  expect(toJSON()).toMatchSnapshot();
 });

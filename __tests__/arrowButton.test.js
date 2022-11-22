@@ -1,42 +1,50 @@
-import React from 'react';
-
-import { create, act } from 'react-test-renderer';
+import { render, fireEvent } from '@testing-library/react-native';
 
 import { ArrowButtom } from '../src/components/Basics/ArrowButtom';
 
-describe('render correctly', () => {
+test('Testando renderização com Loading False', async () => {
+  const { toJSON } = render(
+    <ArrowButtom 
+      loading={false}
+      gradient={[ '#A88BEB', '#8241B8' ]}
+    />
+  );
 
-  it('loading false', () => {
-    const tree = create(
-      <ArrowButtom 
-        loading={false}
-        gradient={[ '#A88BEB', '#8241B8' ]}
-      />
-    ).toJSON();
+  expect(toJSON()).toMatchSnapshot();
+});
 
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('loading true', () => {
-    const tree = create(
-      <ArrowButtom 
+test('Testando renderização com Loading True', async () => {
+  const { toJSON } = render(
+    <ArrowButtom 
       loading={true}
       gradient={[ '#A88BEB', '#8241B8' ]}
     />
-    ).toJSON();
+  );
 
-    expect(tree).toMatchSnapshot();
-  });
+  expect(toJSON()).toMatchSnapshot();
+});
 
-  it('loading true and reverse', () => {
-    const tree = create(
-      <ArrowButtom 
+test('Testando renderização com Loading False e Reverse True', async () => {
+  const { toJSON } = render(
+    <ArrowButtom 
+      loading={false}
+      gradient={[ '#A88BEB', '#8241B8' ]}
+      reverse={true}
+    />
+  );
+
+  expect(toJSON()).toMatchSnapshot();
+});
+
+test('Testando renderização com Loading True e Reverse True', async () => {
+  const { toJSON } = render(
+    <ArrowButtom 
       loading={true}
       gradient={[ '#A88BEB', '#8241B8' ]}
       reverse={true}
     />
-    ).toJSON();
+  );
 
-    expect(tree).toMatchSnapshot();
-  });
+  expect(toJSON()).toMatchSnapshot();
 });
+

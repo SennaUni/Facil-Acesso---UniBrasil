@@ -1,6 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render correctly loading false 1`] = `
+exports[`Testando conteudo para botão com parametro loading FALSE 1`] = `
+<BVLinearGradient
+  colors={
+    [
+      4285281187,
+      4286726584,
+    ]
+  }
+  endPoint={
+    {
+      "x": 0.5,
+      "y": 1,
+    }
+  }
+  locations={null}
+  startPoint={
+    {
+      "x": 0.5,
+      "y": 0,
+    }
+  }
+  style={
+    [
+      {
+        "borderRadius": 25,
+        "marginBottom": 20,
+        "marginLeft": 10,
+        "marginRight": 10,
+        "marginTop": 20,
+      },
+    ]
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "borderRadius": 20,
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 8,
+        "marginTop": 10,
+        "opacity": 1,
+        "paddingBottom": 10,
+        "paddingLeft": 10,
+        "paddingRight": 10,
+        "paddingTop": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#FFFFFF",
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "marginBottom": 0,
+            "marginLeft": 8,
+            "marginRight": 8,
+            "marginTop": 0,
+          },
+        ]
+      }
+    >
+      Jabuticaba
+    </Text>
+  </View>
+</BVLinearGradient>
+`;
+
+exports[`Testando conteudo para botão com parametro loading TRUE 1`] = `
 <BVLinearGradient
   colors={
     [
@@ -85,87 +166,6 @@ exports[`render correctly loading false 1`] = `
       }
     >
       Loading
-    </Text>
-  </View>
-</BVLinearGradient>
-`;
-
-exports[`render correctly loading true 1`] = `
-<BVLinearGradient
-  colors={
-    [
-      4285281187,
-      4286726584,
-    ]
-  }
-  endPoint={
-    {
-      "x": 0.5,
-      "y": 1,
-    }
-  }
-  locations={null}
-  startPoint={
-    {
-      "x": 0.5,
-      "y": 0,
-    }
-  }
-  style={
-    [
-      {
-        "borderRadius": 25,
-        "marginBottom": 20,
-        "marginLeft": 10,
-        "marginRight": 10,
-        "marginTop": 20,
-      },
-    ]
-  }
->
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={false}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      {
-        "alignItems": "center",
-        "borderRadius": 20,
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "marginBottom": 8,
-        "marginTop": 10,
-        "opacity": 1,
-        "paddingBottom": 10,
-        "paddingLeft": 10,
-        "paddingRight": 10,
-        "paddingTop": 10,
-      }
-    }
-  >
-    <Text
-      style={
-        [
-          {
-            "color": "#FFFFFF",
-            "fontSize": 16,
-            "fontWeight": "bold",
-            "marginBottom": 0,
-            "marginLeft": 8,
-            "marginRight": 8,
-            "marginTop": 0,
-          },
-        ]
-      }
-    >
-      TESTE
     </Text>
   </View>
 </BVLinearGradient>

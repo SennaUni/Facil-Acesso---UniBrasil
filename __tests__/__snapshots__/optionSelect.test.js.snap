@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testando conteúdo interno do OptionSelect 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#8241B8",
+      "borderRadius": 25,
+      "flexDirection": "row",
+      "justifyContent": "flex-start",
+      "opacity": 1,
+      "paddingBottom": 10,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "paddingTop": 10,
+    }
+  }
+>
+  <Text />
+  <Text
+    color="#FFF"
+    style={
+      [
+        {
+          "color": "#FFF",
+          "fontSize": 16,
+          "fontWeight": "bold",
+        },
+      ]
+    }
+  >
+    Super recomendo
+  </Text>
+</View>
+`;
