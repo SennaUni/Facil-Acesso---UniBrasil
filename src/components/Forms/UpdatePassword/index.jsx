@@ -8,6 +8,8 @@ import { Form as Unform } from '@unform/mobile';
 
 import auth from '@react-native-firebase/auth';
 
+import firestore from '@react-native-firebase/firestore';
+
 import * as Yup from 'yup';
 import { schema } from './schema';
 
@@ -38,6 +40,13 @@ export function Form() {
 
         user.updatePassword(newPassword);
 
+        firestore()
+      .collection('users')
+      .doc(dataAuth.uid)
+      .update({
+        password: newPassword
+      })
+
         updateValues({
           password: newPassword,
         })
@@ -52,9 +61,9 @@ export function Form() {
 
         setTimeout(() => {
           navigate('perfil');
-        }, 500);
+        }, 2000);
       })
-      .catch((err) => {
+      .catch((err) => { console.log(err)
         const error = {
           type: 'error', 
           title: 'Ocorreu um erro', 

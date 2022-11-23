@@ -24,6 +24,8 @@ export function Principal() {
   const { dataAuth } = useAuth(); 
   const { navigate } = useNavigation();
 
+  console.log(dataAuth)
+
   const dados = (access && commerce)
     ? commentsOptions.filter(item => item.data.access
                      .find(item2 => item2.acessibilidade === access.value))

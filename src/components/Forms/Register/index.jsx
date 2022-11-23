@@ -176,6 +176,7 @@ export function Form() {
             name="phoneNumber"
             icon="phone"
             placeholder="Telefone para contato"
+            keyboardType="phone-pad"
           />
 
           <Select 

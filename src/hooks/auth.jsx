@@ -37,19 +37,26 @@ const AuthProvider = ({ children }) => {
 
   const signOut = useCallback(() => {
     auth().signOut();
-    setDataAuth([])
+    setDataAuth({
+      email: '',
+      password: '',
+      uid: '',
+      accessibility: '',
+      name: '',
+      phoneNumber: '',
+    })
   }, []);
 
-  const updateValues = useCallback((data) => {
+  const updateValues = useCallback((data) => { 
     const object = {
       ...dataAuth,
       ...data,
     }
     
-    // console.log('senha atual => ', dataAuth.password)
-    // console.log('data => ', data)
-    // console.log('dataAuth => ', dataAuth)
-    // console.log('object => ', object)
+    console.log('senha atual => ', dataAuth.password)
+    console.log('data => ', data)
+    console.log('dataAuth => ', dataAuth)
+    console.log('object => ', object)
 
     setDataAuth(object);
   }, []);

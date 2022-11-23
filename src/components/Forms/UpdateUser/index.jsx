@@ -116,9 +116,11 @@ export function Form() {
 
       await handleFirebaseUpdateUser(data);
 
-      setTimeout(() => {
-        navigate('perfil');
-      }, 700);
+      navigate('perfil');
+
+      // setTimeout(() => {
+      //   navigate('perfil');
+      // }, 2000);
 
     } catch (err) {
       const validationErrors = {};

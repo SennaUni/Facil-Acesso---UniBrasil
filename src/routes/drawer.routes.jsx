@@ -127,6 +127,14 @@ export function DrawerRoutes() {
                             title: 'Acesse sua conta'
                         }}
                     />
+                     <Screen 
+                        name='forgotPassword' 
+                        component={ForgotPassword} 
+                        options={{
+                            drawerIcon: ({ color }) => <FontAwesome name="envelope" size={22} color={color} />,
+                            title: 'Esqueci minha senha'
+                        }}
+                    />
                 </>
             )}
         </Navigator>

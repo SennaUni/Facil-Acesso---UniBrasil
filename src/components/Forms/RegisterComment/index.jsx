@@ -81,12 +81,12 @@ export function Form() {
     useCallback (() => {
       formRef.current.setErrors({});
       
-      formRef.current.setData({
-        name: '',
-        address: '',
-        comment: '',
-        accessibility: '',
-      })  
+      // formRef.current.setData({
+      //   name: '',
+      //   address: '',
+      //   comment: '',
+      //   accessibility: '',
+      // })  
 
       setPageForm(1);
     }, [])
